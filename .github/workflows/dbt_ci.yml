@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      DBT_PROFILES_DIR: /home/runner/.dbt
+      DBT_PROFILES_DIR: /Users/jacquuouille/.dbt
 
     steps:
       - name: Checkout Code

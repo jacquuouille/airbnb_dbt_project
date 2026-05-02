@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      DBT_PROFILES_DIR: $HOME/.dbt
+      DBT_PROFILES_DIR: /home/runner/.dbt
 
     steps:
       - name: Checkout code
@@ -29,8 +29,8 @@ jobs:
 
       - name: Create dbt profiles directory and file
         run: |
-          mkdir -p $HOME/.dbt
-          echo "${{ secrets.DBT_PROFILES_YML }}" > $HOME/.dbt/profiles.yml
+          mkdir -p /home/runner/.dbt
+          echo "${{ secrets.DBT_PROFILES_YML }}" > /home/runner/.dbt/profiles.yml
 
       - name: Install dbt dependencies
         run: dbt deps

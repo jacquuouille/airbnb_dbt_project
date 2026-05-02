@@ -28,10 +28,5 @@ jobs:
           pip install dbt-duckdb
           dbt deps
 
-      - name: Setup dbt profiles
-        run: |
-          mkdir -p ~/.dbt
-          cp profiles/profiles.yml ~/.dbt/profiles.yml
-
       - name: Run dbt
         run: dbt build

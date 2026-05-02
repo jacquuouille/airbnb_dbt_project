@@ -25,7 +25,12 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install dbt-core dbt-postgres  # change adapter if needed
+          pip install dbt-core dbt-postgres
+
+      - name: Create dbt profiles.yml
+        run: |
+          mkdir -p ~/.dbt
+          echo "${{ secrets.DBT_PROFILES_YML }}" > ~/.dbt/profiles.yml
 
       - name: Install dbt project dependencies
         run: dbt deps
@@ -33,5 +38,5 @@ jobs:
       - name: Compile dbt project
         run: dbt compile
 
-      - name: Run dbt models and tests 
+      - name: Run dbt models and tests
         run: dbt build

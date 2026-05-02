@@ -23,7 +23,7 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Install dbt (BigQuery adapter)
         run: |
           python -m pip install --upgrade pip
           pip install dbt-core dbt-bigquery
@@ -34,11 +34,16 @@ jobs:
       - name: Write profiles.yml
         run: |
           cat <<EOF > .dbt/profiles.yml
-          ${{ secrets.DBT_PROFILES_YML }}
-          EOF
+${{ secrets.DBT_PROFILES_YML }}
+EOF
+
+      - name: Verify profiles.yml (debug)
+        run: |
+          echo "Checking profiles file..."
+          cat .dbt/profiles.yml
 
       - name: Install dbt dependencies
         run: dbt deps
 
-      - name: Run dbt build
+      - name: Run dbt build (models + tests)
         run: dbt build

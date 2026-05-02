@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      DBT_PROFILES_DIR: ~/.dbt
+      DBT_PROFILES_DIR: $HOME/.dbt
 
     steps:
       - name: Checkout code
@@ -27,12 +27,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install dbt-core dbt-postgres
 
-      - name: Create dbt profiles.yml
+      - name: Create dbt profiles directory and file
         run: |
-          mkdir -p ~/.dbt
-          echo "${{ secrets.DBT_PROFILES_YML }}" > ~/.dbt/profiles.yml
+          mkdir -p $HOME/.dbt
+          echo "${{ secrets.DBT_PROFILES_YML }}" > $HOME/.dbt/profiles.yml
 
-      - name: Install dbt project dependencies
+      - name: Install dbt dependencies
         run: dbt deps
 
       - name: Compile dbt project

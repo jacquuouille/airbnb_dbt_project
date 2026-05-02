@@ -63,7 +63,7 @@ jobs:
                 keyfile: "{{ env_var('GOOGLE_APPLICATION_CREDENTIALS') }}"
                 threads: 4
                 timeout_seconds: 300
-                location: EU
+                location: US
           EOF
 
       # ---------------------------------------

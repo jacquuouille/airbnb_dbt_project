@@ -1,0 +1,12 @@
+default:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      threads: 16
+      database: airbnb-495108
+      schema: airbnb_data
+      method: service-account
+      keyfile: /Users/jacquuouille/Downloads/airbnb-495108-dbef3d59e5ff.json
+      location: US
+      dataproc_batch: null

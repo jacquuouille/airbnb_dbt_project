@@ -27,16 +27,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install dbt-core dbt-postgres
 
-      - name: Create dbt profiles directory and file
-        run: |
-          mkdir -p /home/runner/.dbt
-          echo "${{ secrets.DBT_PROFILES_YML }}" > /home/runner/.dbt/profiles.yml
-
       - name: Install dbt dependencies
         run: dbt deps
-
-      - name: Compile dbt project
-        run: dbt compile
 
       - name: Run dbt models and tests
         run: dbt build

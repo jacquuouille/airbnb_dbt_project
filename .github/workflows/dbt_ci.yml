@@ -58,8 +58,8 @@ jobs:
               dev:
                 type: bigquery
                 method: service-account
-                project: YOUR_GCP_PROJECT_ID
-                dataset: YOUR_DATASET_NAME
+                project: airbnb-495108
+                dataset: airbnb_data
                 keyfile: "{{ env_var('GOOGLE_APPLICATION_CREDENTIALS') }}"
                 threads: 4
                 timeout_seconds: 300

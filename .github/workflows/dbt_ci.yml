@@ -27,11 +27,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install dbt-core dbt-postgres  # change adapter if needed
 
-      - name: Create dbt profiles.yml
-        run: |
-          mkdir -p ~/.dbt
-          echo "${{ secrets.DBT_PROFILES_YML }}" > ~/.dbt/profiles.yml
-
       - name: Install dbt project dependencies
         run: dbt deps
 

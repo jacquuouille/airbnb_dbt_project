@@ -215,10 +215,6 @@ sources:
               - not_null
           - name: reviewer_name
             description: "Name of the reviewer."
-          - name: review_date
-            description: "Date when the review was posted."
-            tests:
-              - not_null
           - name: comments
             description: "Text content of the review."
             tests:

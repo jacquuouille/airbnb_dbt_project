@@ -12,7 +12,7 @@ with source as (
 , cleaned as (
 
     select
-        cast(id as int64) as listing_id,
+        id as listing_id,
         name as listing_name,
         description as listing_description,
         neighbourhood_cleansed as neighbourhood,

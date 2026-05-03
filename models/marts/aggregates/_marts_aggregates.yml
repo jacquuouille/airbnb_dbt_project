@@ -62,3 +62,15 @@ models:
         description: "Total number of calendar days in the month for this listing (usually 28–31 days depending on month)."
       - name: occupancy_rate
         description: Calculated occupancy rate for the month. Formula nights_booked divided by total_calendar_days.  Expressed as a decimal (e.g., 0.75 = 75% occupancy).
+
+  - name: amenities_impact
+    description: Analysis of how different amenities impact average review ratings for listings in San Diego. Aggregates average ratings for listings with specific amenities to identify which amenities are associated with higher guest satisfaction.
+    columns:
+      - name: amenity
+        description: "Name of the amenity (e.g., Wi-Fi, Air Conditioning, Kitchen)."
+        tests:
+          - not_null
+      - name: occupancy_rate
+        description: "Average review rating for listings that include this amenity."
+        tests:
+          - not_null

@@ -5,7 +5,7 @@
 
 with calendar as (
 
-    select 
+    select
         calendar_date,
         listing_id,
         case when is_available = 'false' then 1 else 0 end as is_booked

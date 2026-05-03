@@ -1,0 +1,64 @@
+version: 2
+
+models: 
+  - name: listing_metrics
+    description: Combines key performance metrics per listing including average price, occupancy rate, and review score rating.
+    columns:
+      - name: listing_id
+        tests: 
+          - not_null
+      - name: occupancy_rate
+        description: "Proportion of days the listing was unavailable"
+      - name: avg_rating
+        description: "Average review score rating"
+      - name: avg_accuracy
+        description: "Average accuracy rating"
+      - name: avg_cleanliness
+        description: "Average cleanliness rating"
+      - name: avg_checkin
+        description: "Average check-in rating"
+      - name: avg_communication
+        description: "Average communication rating"
+      - name: avg_location
+        description: "Average location rating"
+      - name: avg_value
+        description: "Average value rating"
+
+  - name: listing_by_room_type
+    description: Count of listings by room type and neighbourhood.
+    columns:
+      - name: room_type
+        tests: 
+            - not_null
+      - name: neighbourhood
+        tests: 
+            - not_null
+      - name: listing_count
+        description: "Number of listings matching the room type and neighbourhood"
+
+  - name: monthly_reviews
+    description: Review volume per month across all listings.
+    columns:
+      - name: review_month
+        tests: 
+            - not_null
+      - name: review_count
+        description: "Total reviews received in the given month"
+
+  - name: monthly_occupancy
+    description: Aggregated monthly occupancy metrics for Airbnb listings in San Diego. Calculates occupancy rate based on number of nights booked divided by total calendar days per month for each listing.
+    columns:
+      - name: month
+        description: "Month for which occupancy is calculated (first day of the month)."
+        tests:
+          - not_null
+      - name: listing_id
+        description: "Unique identifier for the Airbnb listing."
+        tests:
+          - not_null
+      - name: nights_booked
+        description: "Total number of nights the listing was booked during the month."
+      - name: total_calendar_days
+        description: "Total number of calendar days in the month for this listing (usually 28–31 days depending on month)."
+      - name: occupancy_rate
+        description: Calculated occupancy rate for the month. Formula nights_booked divided by total_calendar_days.  Expressed as a decimal (e.g., 0.75 = 75% occupancy).

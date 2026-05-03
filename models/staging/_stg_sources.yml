@@ -239,3 +239,7 @@ models:
           - not_null
       - name: review_comments
         description: "Text content of the written review."
+    tests:
+        - dbt_utils.unique_combination_of_columns:
+            arguments:
+              combination_of_columns: ['review_id', 'listing_id', 'reviewer_id']

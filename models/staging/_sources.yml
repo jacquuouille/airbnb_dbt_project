@@ -59,6 +59,64 @@ sources:
                   config:
                     severity: warn
                     description: "Host ID should not be null, but some listings may have missing host information."
+          - name: host_name
+            description: "Name of the host."
+          - name: hosts_time_as_user_years
+            description: "Number of years the host has been active on the Airbnb platform."
+            tests:
+              - not_null:
+                  config:
+                    severity: warn
+                    description: "Host time as user in years should not be null, but some hosts may have missing information."
+          - name: hosts_time_as_user_months
+            description: "Number of months the host has been active on the Airbnb platform."
+            tests:
+              - not_null:
+                  config:
+                    severity: warn
+                    description: "Host time as user in months should not be null, but some hosts may have missing information."
+          - name: hosts_time_as_host_years
+            description: "Number of years the host has been hosting on the Airbnb platform."
+            tests:
+              - not_null:
+                  config:
+                    severity: warn
+                    description: "Host time as host in years should not be null, but some hosts may have missing information."
+          - name: hosts_time_as_host_months
+            description: "Number of months the host has been hosting on the Airbnb platform."
+            tests:
+              - not_null:
+                  config:
+                    severity: warn
+                    description: "Host time as host in months should not be null, but some hosts may have missing information."
+          - name: host_location
+            description: "Location of the host."
+          - name: host_about
+            description: "Free-text description about the host."
+          - name: host_is_superhost
+            description: "Indicates whether the host is a superhost."
+            tests:
+              - not_null:
+                  config:
+                    severity: warn
+                    description: "Host superhost status should not be null, but some hosts may have missing information."
+          - name: host_listings_count
+            description: "Number of listings the host has on the Airbnb platform."
+            tests:
+              - not_null:
+                  config:
+                    severity: warn
+                    description: "Host listings count should not be null, but some hosts may have missing information."
+              - dbt_utils.accepted_range:
+                  arguments:
+                    min_value: 0
+          - name: host_identity_verified
+            description: "Indicates whether the host's identity has been verified."
+            tests:
+              - not_null:
+                  config:
+                    severity: warn
+                    description: "Host identity verification should not be null, but some hosts may have missing information."
           - name: neighbourhood_cleansed
             description: "Standardized neighbourhood name." 
           - name: latitude

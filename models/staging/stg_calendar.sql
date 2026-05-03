@@ -17,7 +17,7 @@ with source as (
             case 
                 when available is true then 'true'
                 when available is false then 'false'
-                else null
+                else 'unknown'
             end 
         as string) as is_available,
         price,

@@ -106,6 +106,20 @@ models:
               arguments:
                 min_value: 0
                 max_value: 365
+      - name: review_scores_rating
+        description: "Overall rating score for the listing."
+      - name: review_scores_accuracy
+        description: "Rating score for accuracy of the listing description."
+      - name: review_scores_cleanliness
+        description: "Rating score for cleanliness of the listing."
+      - name: review_scores_checkin
+        description: "Rating score for the check-in experience."
+      - name: review_scores_communication
+        description: "Rating score for host communication."
+      - name: review_scores_location
+        description: "Rating score for location."
+      - name: review_scores_value
+        description: "Rating score representing value for money."
       - name: listing_url
         description: "URL link to the Airbnb listing."
         tests:
@@ -130,44 +144,6 @@ models:
         - dbt_utils.unique_combination_of_columns:
             arguments:
               combination_of_columns: ['listing_id', 'listing_url', 'host_id']
-
-  - name: stg_reviews
-    description: "Staging model containing review score metrics for each Airbnb listing."
-    columns:
-      - name: listing_id
-        description: "Unique identifier of the listing."
-        tests:
-          - not_null
-          - unique
-      - name: review_scores_rating
-        description: "Overall rating score for the listing."
-      - name: review_scores_accuracy
-        description: "Rating score for accuracy of the listing description."
-      - name: review_scores_cleanliness
-        description: "Rating score for cleanliness of the listing."
-      - name: review_scores_checkin
-        description: "Rating score for the check-in experience."
-      - name: review_scores_communication
-        description: "Rating score for host communication."
-      - name: review_scores_location
-        description: "Rating score for location."
-      - name: review_scores_value
-        description: "Rating score representing value for money."
-      - name: host_id
-        description: "Unique identifier of the host associated with the listing."
-        tests:
-          - not_null:
-              config:
-                severity: warn
-                description: "Host ID should not be null, but some listings may have missing host information."
-          - relationships:
-              arguments:
-                to: ref('stg_hosts')
-                field: host_id
-    tests:
-        - dbt_utils.unique_combination_of_columns:
-            arguments:
-              combination_of_columns: ['listing_id', 'host_id']
 
   - name: stg_hosts
     description: "Staging model containing cleaned and standardized host-level information from Airbnb listings."

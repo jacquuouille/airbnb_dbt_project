@@ -192,3 +192,34 @@ sources:
             description: "License or registration number for the listing."   
           - name: reviews_per_month
             description: "Average number of reviews per month."
+
+      - name: reviews
+        description: "This table contains individual reviews for Airbnb listings, including reviewer information, review content, and ratings."
+        columns:
+          - name: listing_id
+            description: "Unique identifier for the listing being reviewed."
+            tests:
+              - not_null
+          - name: id
+            description: "Unique identifier for the review."
+            tests:
+              - not_null
+              - unique
+          - name: date
+            description: "Date when the review was posted."
+            tests:
+              - not_null
+          - name: reviewer_id
+            description: "Unique identifier for the reviewer."
+            tests:
+              - not_null
+          - name: reviewer_name
+            description: "Name of the reviewer."
+          - name: review_date
+            description: "Date when the review was posted."
+            tests:
+              - not_null
+          - name: comments
+            description: "Text content of the review."
+            tests:
+              - not_null

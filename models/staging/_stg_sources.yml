@@ -210,3 +210,32 @@ models:
                 severity: warn
                 description: "Host profile URL should not be null, but some hosts may have missing profile information."
           # unique: some host_ids may share the same profile URL if they are co-hosts or if the data has inconsistencies. --- IGNORE ---
+
+  - name: stg_reviews
+    description: "Staging model containing cleaned and standardized review-level information from Airbnb listings."
+    columns:
+      - name: listing_id
+        description: "Identifier of the listing being reviewed."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_listings')
+                field: listing_id
+      - name: review_id
+        description: "Unique identifier of the review."
+        tests:
+          - not_null
+          - unique
+      - name: reviewer_id
+        description: "Unique identifier of the reviewer."
+        tests:
+          - not_null
+      - name: reviewer_name
+        description: "Name of the reviewer as displayed on the platform."
+      - name: review_date
+        description: "Date when the review was posted."
+        tests:
+          - not_null
+      - name: review_comments
+        description: "Text content of the review."

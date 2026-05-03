@@ -238,4 +238,4 @@ models:
         tests:
           - not_null
       - name: review_comments
-        description: "Text content of the review."
+        description: "Text content of the written review."

@@ -67,16 +67,16 @@ sources:
               - not_null
               - dbt_utils.accepted_range:
                   arguments:
-                    min: -90
-                    max: 90
+                    min_value: -90
+                    max_value: 90
           - name: longitude
             description: "Longitude coordinate of the listing location." 
             tests:
               - not_null
               - dbt_utils.accepted_range:
                   arguments:
-                    min: -180
-                    max: 180
+                    min_value: -180
+                    max_value: 180
           - name: property_type
             description: "Type of property (e.g., apartment, house)."
           - name: room_type

@@ -28,6 +28,13 @@ with source as (
         minimum_nights_avg_ntm as minimum_nights,
         maximum_nights_avg_ntm as maximum_nights,
         availability_365,
+        review_scores_rating,
+        review_scores_accuracy,
+        review_scores_cleanliness,
+        review_scores_checkin,
+        review_scores_communication,
+        review_scores_location,
+        review_scores_value,
         listing_url, 
         last_scraped,
         host_id

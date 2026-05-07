@@ -21,8 +21,8 @@ with calendar as (
         sum(is_booked) as nights_booked, 
         count(*) as total_nights,
         round(
-            sum(is_booked) * 1.0 / count(*), 2
-        ) as occupancy_rate
+            100.0*sum(is_booked) * 1.0 / count(*), 2
+        ) as occupancy_rate_pct
     from calendar
     group by 
         1, 2

@@ -1,3 +1,8 @@
+{{config(
+    materialized='table',
+    schema='marts'
+) }}
+
 with amenities as (
 
     {{ explode_amenities(ref('stg_listings')) }}

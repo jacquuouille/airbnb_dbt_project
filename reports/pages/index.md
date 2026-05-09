@@ -8,20 +8,34 @@ title: Overview
 </Details>
 
 
-``` sql orders 
-    select * from airbnb_data.listings 
-    limit 100
-```
-
 ``` sql kpis 
     select 
-        count(distinct listing_id) as num_listings
+        count(distinct host_id) as num_hosts
+        , count(distinct listing_id) as num_listings
         , avg(avg_rating) as avg_ratings 
         , avg(occupancy_rate) as avg_accurancy
-        from 
-            airbnb_data.listing_metrics
+    from 
+        airbnb_data.listing_metrics
 ```
 
+``` sql monthly_occupancy
+    select 
+        month
+        , sum(nights_booked) as num_bookings
+        , avg(occupancy_rate_pct) as avg_occupancy_rate
+    from 
+        airbnb_data.monthly_occupancy
+    group by 
+        1
+    order by 
+        1
+```
+
+<BigValue
+    data={kpis}
+    value=num_hosts
+    fmt=num0
+/>
 <BigValue
     data={kpis}
     value=num_listings
@@ -37,6 +51,13 @@ title: Overview
     value=avg_ratings
     fmt=num1
 />
+
+<BarChart
+    data={monthly_occupancy}
+    x=month
+    y=num_bookings
+/>
+
 
 
 ```sql categories

@@ -7,6 +7,7 @@ with base as (
 
     select 
     c.listing_id, 
+    l.host_id,
     round(
         sum(case when c.is_available = 'false' then 1 else 0 end) * 1.0 / count(*), 2
     ) as occupancy_rate,
@@ -21,7 +22,7 @@ with base as (
         {{ ref('fct_calendar') }} c
     join 
         {{ ref('dim_listings') }} l on c.listing_id = l.listing_id
-    group by 1
+    group by 1, 2
 
 )
 

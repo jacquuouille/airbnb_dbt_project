@@ -7,6 +7,38 @@ title: Overview
   This page can be found in your project at `/pages/index.md`. Make a change to the markdown file and save it to see the change take effect in your browser.
 </Details>
 
+
+``` sql orders 
+    select * from airbnb_data.listings 
+    limit 100
+```
+
+``` sql kpis 
+    select 
+        count(distinct listing_id) as num_listings
+        , avg(avg_rating) as avg_ratings 
+        , avg(occupancy_rate) as avg_accurancy
+        from 
+            airbnb_data.listing_metrics
+```
+
+<BigValue
+    data={kpis}
+    value=num_listings
+    fmt=num0
+/>
+<BigValue
+    data={kpis}
+    value=avg_accurancy
+    fmt=pct1
+/>
+<BigValue
+    data={kpis}
+    value=avg_ratings
+    fmt=num1
+/>
+
+
 ```sql categories
   select
       category

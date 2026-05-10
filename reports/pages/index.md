@@ -9,12 +9,15 @@ title: Overview
 
 ``` sql kpis 
     select 
-        count(distinct host_id) as num_hosts
-        , count(distinct listing_id) as num_listings
-        , avg(avg_rating) as avg_ratings 
-        , avg(occupancy_rate) as avg_accurancy
+        count(distinct p.host_id) as num_hosts
+        , count(distinct p.listing_id) as num_listings
+        , avg(p.avg_rating) as avg_ratings 
+        , avg(m.occupancy_rate_pct) as avg_accurancy
     from 
-        airbnb_data.listing_metrics
+        airbnb_data.listing_performance_metrics p
+    join 
+        airbnb_data.listing_monthly_metrics m
+        on p.listing_id = m.listing_id
 ```
 
 <BigValue
@@ -71,6 +74,13 @@ title: Overview
     y=num_bookings
     series=room_type
 />
+
+``` sql occupancy_rating_loc
+    select
+        listing_id
+        , avg(ooccupancy_rate)
+```
+
 
 ## What's Next?
 - [Connect your data sources](settings)

@@ -1,8 +1,21 @@
 version: 2
 
 models: 
-  - name: listing_metrics
-    description: Combines key performance metrics per listing including average price, occupancy rate, and review score rating.
+
+  - name: amenities_impact
+    description: "Analysis of how different amenities impact occupancy for listings."
+    columns:
+      - name: amenity
+        description: "Name of the amenity (e.g., Wi-Fi, Air Conditioning, Kitchen)."
+        tests:
+          - not_null
+      - name: occupancy_rate
+        description: "Average occupancy rate for listings that include this amenity."
+        tests:
+          - not_null
+
+  - name: listing_performance_metrics
+    description: "Key performance metrics per listing (review score ratings)"
     columns:
       - name: listing_id
         tests: 
@@ -24,53 +37,57 @@ models:
       - name: avg_value
         description: "Average value rating"
 
-  - name: listing_by_room_type
-    description: Count of listings by room type and neighbourhood.
+  - name: listing_monthly_metrics
+    description: "Aggregated monthly occupancy metrics by listing."
     columns:
-      - name: room_type
-        tests: 
-            - not_null
+      - name: month
+        description: "Calendar date truncated to the month level."
+        tests:
+          - not_null
+      - name: listing_id
+        description: "Unique identifier for the listing."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_listings')
+                field: listing_id
       - name: neighbourhood
-        tests: 
-            - not_null
-      - name: listing_count
-        description: "Number of listings matching the room type and neighbourhood"
+        description: "Neighborhood where the listing is located."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_listings')
+                field: neighbourhood
+      - name: property_type
+        description: "Type of property (e.g., Apartment, House, Condo)."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_listings')
+                field: property_type
+      - name: room_type
+        description: "Type of room offered (e.g., Entire home/apt, Private room, Shared room)."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_listings')
+                field: room_type
+      - name: num_nights_booked
+        description: "Total number of nights the listing was booked during the month."
+      - name: num_total_nights
+        description: "Total number of nights in the month for this listing (usually 28–31 nights depending on month)."
+      - name: occupancy_rate
+        description: "Calculated occupancy rate for the month."
 
   - name: monthly_reviews
-    description: Review volume per month across all listings.
+    description: "Review volume per month across all listings."
     columns:
       - name: review_month
         tests: 
             - not_null
       - name: review_count
         description: "Total reviews received in the given month"
-
-  - name: monthly_occupancy
-    description: Aggregated monthly occupancy metrics for Airbnb listings in San Diego. Calculates occupancy rate based on number of nights booked divided by total calendar days per month for each listing.
-    columns:
-      - name: month
-        description: "Month for which occupancy is calculated (first day of the month)."
-        tests:
-          - not_null
-      - name: listing_id
-        description: "Unique identifier for the Airbnb listing."
-        tests:
-          - not_null
-      - name: nights_booked
-        description: "Total number of nights the listing was booked during the month."
-      - name: total_calendar_days
-        description: "Total number of calendar days in the month for this listing (usually 28–31 days depending on month)."
-      - name: occupancy_rate
-        description: Calculated occupancy rate for the month. Formula nights_booked divided by total_calendar_days.  Expressed as a decimal (e.g., 0.75 = 75% occupancy).
-
-  - name: amenities_impact
-    description: Analysis of how different amenities impact average review ratings for listings in San Diego. Aggregates average ratings for listings with specific amenities to identify which amenities are associated with higher guest satisfaction.
-    columns:
-      - name: amenity
-        description: "Name of the amenity (e.g., Wi-Fi, Air Conditioning, Kitchen)."
-        tests:
-          - not_null
-      - name: occupancy_rate
-        description: "Average review rating for listings that include this amenity."
-        tests:
-          - not_null

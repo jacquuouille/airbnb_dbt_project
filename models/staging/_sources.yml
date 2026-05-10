@@ -6,30 +6,30 @@ sources:
     schema: airbnb_data
     tables:
       - name: calendar
-        description: "This table contains information about calendar-based availability and pricing for Airbnb listings."
+        description: "This table contains information about calendar-based availability and pricing for Airbnb listings in Vancouver."
         columns:
           - name: listing_id
-            description: Unique identifier for an Airbnb listing.
+            description: "Unique identifier for an Airbnb listing."
             tests:
               - not_null
           - name: date
-            description: The date for which the listing information is recorded.
+            description: "The date for which the listing information is recorded."
             tests:
               - not_null
           - name: available
-            description: Indicates whether the listing is available on the given date.
+            description: "Indicates whether the listing is available on the given date."
             tests:
               - not_null
           - name: price
-            description: The price of the listing for the given date.
+            description: "The price of the listing for the given date."
           - name: adjusted_price
-            description: The adjusted price of the listing, taking into account any discounts or promotions.
+            description: "The adjusted price of the listing, taking into account any discounts or promotions."
           - name: minimum_nights
-            description: The minimum number of nights required for a booking.
+            description: "The minimum number of nights required for a booking."
             tests:
               - not_null
           - name: maximum_nights
-            description: The maximum number of nights allowed for a booking.
+            description: "The maximum number of nights allowed for a booking."
             tests:
               - not_null
 
@@ -194,7 +194,7 @@ sources:
             description: "Average number of reviews per month."
 
       - name: reviews
-        description: "This table contains individual reviews for Airbnb listings, including reviewer information, review content, and ratings."
+        description: "This table contains individual reviews for listings, including reviewer information, review content, and ratings."
         columns:
           - name: listing_id
             description: "Unique identifier for the listing being reviewed."

@@ -2,8 +2,7 @@
 title: Overview
 ---
 
-<Details title='How to edit this page'>
-
+<Details title='About this data'>
   This page can be found in your project at `/pages/index.md`. Make a change to the markdown file and save it to see the change take effect in your browser.
 </Details>
 
@@ -16,19 +15,6 @@ title: Overview
         , avg(occupancy_rate) as avg_accurancy
     from 
         airbnb_data.listing_metrics
-```
-
-``` sql monthly_occupancy
-    select 
-        month
-        , sum(nights_booked) as num_bookings
-        , avg(occupancy_rate_pct) as avg_occupancy_rate
-    from 
-        airbnb_data.monthly_occupancy
-    group by 
-        1
-    order by 
-        1
 ```
 
 <BigValue
@@ -52,50 +38,38 @@ title: Overview
     fmt=num1
 />
 
+
+```sql properties
+   select
+        distinct property_type
+   from 
+        airbnb_data.monthly_occupancy
+```
+
+<Dropdown data={properties} name=property_type value=property_type>
+    <DropdownOption value="%" valueLabel="All Properties"/>
+</Dropdown> 
+
+``` sql monthly_occupancy
+    select 
+        month
+        , room_type
+        , sum(nights_booked) as num_bookings
+        , avg(occupancy_rate_pct) as avg_occupancy_rate
+    from 
+        airbnb_data.monthly_occupancy
+    where 
+        property_type like '${inputs.property_type.value}'
+    group by 
+        1, 2
+    order by 
+        1, 2
+```
 <BarChart
     data={monthly_occupancy}
     x=month
     y=num_bookings
-/>
-
-
-
-```sql categories
-  select
-      category
-  from needful_things.orders
-  group by category
-```
-
-<Dropdown data={categories} name=category value=category>
-    <DropdownOption value="%" valueLabel="All Categories"/>
-</Dropdown>
-
-<Dropdown name=year>
-    <DropdownOption value=% valueLabel="All Years"/>
-    <DropdownOption value=2019/>
-    <DropdownOption value=2020/>
-    <DropdownOption value=2021/>
-</Dropdown>
-
-```sql orders_by_category
-  select 
-      date_trunc('month', order_datetime) as month,
-      sum(sales) as sales_usd,
-      category
-  from needful_things.orders
-  where category like '${inputs.category.value}'
-  and date_part('year', order_datetime) like '${inputs.year.value}'
-  group by all
-  order by sales_usd desc
-```
-
-<BarChart
-    data={orders_by_category}
-    title="Sales by Month, {inputs.category.label}"
-    x=month
-    y=sales_usd
-    series=category
+    series=room_type
 />
 
 ## What's Next?

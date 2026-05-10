@@ -1,1 +1,0 @@
-select * from `airbnb-495108.airbnb_data_marts.listing_metrics`

@@ -18,7 +18,7 @@ with calendar as (
     select 
         date_trunc(c.calendar_date, month) as month,
         c.listing_id,
-        l.neighbourhood,
+        l.listing_neighbourhood,
         l.property_type,
         l.room_type,
         sum(c.is_booked) as num_nights_booked, 

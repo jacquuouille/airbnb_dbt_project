@@ -50,9 +50,7 @@ models:
           - not_null
       - name: listing_description
         description: "Detailed description of the listing."
-      - name: neighbourhood
-        description: "Standardized neighbourhood where the listing is located."
-      - name: latitude
+      - name: listing_latitude
         description: "Latitude coordinate of the listing location."
         tests:
           - not_null
@@ -60,7 +58,7 @@ models:
               arguments:
                 min_value: -90
                 max_value: 90
-      - name: longitude
+      - name: listing_longitude
         description: "Longitude coordinate of the listing location."
         tests:
           - not_null
@@ -68,6 +66,8 @@ models:
               arguments:
                 min_value: -180
                 max_value: 180
+      - name: listing_neighbourhood
+        description: "Standardized neighborhood where the listing is located."
       - name: property_type
         description: "Type of property (e.g., apartment, house)."
       - name: room_type
@@ -243,3 +243,28 @@ models:
         - dbt_utils.unique_combination_of_columns:
             arguments:
               combination_of_columns: ['review_id', 'listing_id', 'reviewer_id']
+
+  - name: stg_neighbourhoods
+    description: "Staging model containing cleaned and standardized neighborhood-level information for Vancouver, including geographic coordinates."
+    columns:
+      - name: neighbourhood
+        description: "Name of the neighborhood."
+        tests:
+          - not_null
+          - unique
+      - name: neighbourhood_latitude
+        description: "Latitude coordinate of the neighborhood centroid."
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: -90
+                max_value: 90
+      - name: neighbourhood_longitude
+        description: "Longitude coordinate of the neighborhood centroid."
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: -180
+                max_value: 180

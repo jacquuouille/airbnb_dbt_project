@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: int_listings_enriched
+    description: Listings enriched with neighbourhood lat/long, joined on neighbourhood_id.
+    columns:
+      - name: listing_id
+        tests:
+          - unique
+          - not_null
+      - name: neighbourhood_latitude
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: -90
+                max_value: 90
+      - name: neighbourhood_longitude
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: -180
+                max_value: 180

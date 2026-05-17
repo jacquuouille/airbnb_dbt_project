@@ -15,7 +15,7 @@ with source as (
         id as listing_id,
         name as listing_name,
         description as listing_description,
-        neighbourhood_cleansed as neighbourhood,
+        neighbourhood_cleansed as neighborhood,
         latitude,
         longitude,
         property_type,

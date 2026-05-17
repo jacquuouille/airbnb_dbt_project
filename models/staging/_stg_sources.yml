@@ -50,8 +50,8 @@ models:
           - not_null
       - name: listing_description
         description: "Detailed description of the listing."
-      - name: neighbourhood
-        description: "Standardized neighbourhood where the listing is located."
+      - name: neighborhood
+        description: "Standardized neighborhood where the listing is located."
       - name: latitude
         description: "Latitude coordinate of the listing location."
         tests:

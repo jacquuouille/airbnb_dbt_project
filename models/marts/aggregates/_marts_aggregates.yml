@@ -52,14 +52,14 @@ models:
               arguments:
                 to: ref('dim_listings')
                 field: listing_id
-      - name: neighbourhood
+      - name: listing_neighbourhood
         description: "Neighborhood where the listing is located."
         tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('dim_listings')
-                field: neighbourhood
+                field: listing_neighbourhood
       - name: property_type
         description: "Type of property (e.g., Apartment, House, Condo)."
         tests:

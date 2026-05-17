@@ -1,1 +1,1 @@
-select * from `airbnb-495108.airbnb_data.listings`
+select * from `airbnb-495108.airbnb_data_staging.dim_listings`

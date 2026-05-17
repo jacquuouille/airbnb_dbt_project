@@ -9,15 +9,12 @@ title: Overview
 
 ``` sql kpis 
     select 
-        count(distinct p.host_id) as num_hosts
-        , count(distinct p.listing_id) as num_listings
-        , avg(p.avg_rating) as avg_ratings 
-        , avg(m.occupancy_rate_pct) as avg_accurancy
+        count(distinct host_id) as num_hosts
+        , count(distinct listing_id) as num_listings
+        , avg(avg_rating) as avg_ratings 
+        , avg(occupancy_rate_pct)/100 as avg_accurancy
     from 
-        airbnb_data.listing_performance_metrics p
-    join 
-        airbnb_data.listing_monthly_metrics m
-        on p.listing_id = m.listing_id
+        airbnb_data.listing_performance_metrics
 ```
 
 <BigValue
@@ -46,7 +43,7 @@ title: Overview
    select
         distinct property_type
    from 
-        airbnb_data.monthly_occupancy
+        airbnb_data.listing_monthly_metrics
 ```
 
 <Dropdown data={properties} name=property_type value=property_type>
@@ -57,10 +54,10 @@ title: Overview
     select 
         month
         , room_type
-        , sum(nights_booked) as num_bookings
+        , sum(num_nights_booked) as num_bookings
         , avg(occupancy_rate_pct) as avg_occupancy_rate
     from 
-        airbnb_data.monthly_occupancy
+        airbnb_data.listing_monthly_metrics
     where 
         property_type like '${inputs.property_type.value}'
     group by 
@@ -77,10 +74,26 @@ title: Overview
 
 ``` sql occupancy_rating_loc
     select
-        listing_id
-        , avg(ooccupancy_rate)
+        distinct m.listing_id
+        , l.neighbourhood
+        , l.latitude
+        , l.longitude
+        , m.occupancy_rate_pct/100 as occ_rate_pct
+    from
+        airbnb_data.listing_performance_metrics m
+    left join
+        airbnb_data.listings l
+        on m.listing_id = l.listing_id
 ```
 
+<PointMap
+    data={occupancy_rating_loc} 
+    lat=latitude
+    long=longitude 
+    pointName=neighbourhood
+    value=occ_rate_pct
+    height=200
+/>
 
 ## What's Next?
 - [Connect your data sources](settings)

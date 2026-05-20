@@ -27,56 +27,56 @@ models:
         tests:
           - dbt_utils.accepted_range:
               arguments:
-                min: 0
+                min_value: 0
       - name: avg_rating
         description: "Average review score rating"
         tests:
           - dbt_utils.accepted_range:
               arguments:
-                min: 0
-                max: 5
+                min_value: 0
+                max_value: 5
       - name: avg_accuracy
         description: "Average accuracy rating"
         tests:
           - dbt_utils.accepted_range:
               arguments:
-                min: 0
-                max: 5
+                min_value: 0
+                max_value: 5
       - name: avg_cleanliness
         description: "Average cleanliness rating"
         tests:
           - dbt_utils.accepted_range:
               arguments:
-                min: 0
-                max: 5
+                min_value: 0
+                max_value: 5
       - name: avg_checkin
         description: "Average check-in rating"
         tests:
           - dbt_utils.accepted_range:
               arguments:
-                min: 0
-                max: 5
+                min_value: 0
+                max_value: 5
       - name: avg_communication
         description: "Average communication rating"
         tests:
           - dbt_utils.accepted_range:
               arguments:
-                min: 0
-                max: 5
+                min_value: 0
+                max_value: 5
       - name: avg_location
         description: "Average location rating"
         tests:
           - dbt_utils.accepted_range:
               arguments:
-                min: 0
-                max: 5
+                min_value: 0
+                max_value: 5
       - name: avg_value
         description: "Average value rating"
         tests:
           - dbt_utils.accepted_range:
               arguments:
-                min: 0
-                max: 5
+                min_value: 0
+                max_value: 5
 
   - name: listing_monthly_metrics
     description: "Aggregated monthly occupancy metrics by listing."

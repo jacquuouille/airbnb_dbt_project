@@ -67,7 +67,8 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
 <BigValue
     data={main_kpis}
     value=avg_ratings
-    title="Listing Ratings (avg.)"
+    title="Listing Ratings (avg.)" 
+    <Info description="Out of 5"
     fmt=num1
 />
 
@@ -204,7 +205,7 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
         series: [
             {
                 type: 'pie',
-                radius: ['40%', '70%'],
+                radius: ['80%', '70%'],
                 data: [...listings_by_room],
             }
         ]
@@ -228,39 +229,23 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
 
 ``` sql reviews_kpis
     select 
-        avg(avg_rating) as avg_rating
-        , avg(avg_accuracy) as avg_accuracy
-        , avg(avg_cleanliness) as avg_cleanliness
-        , avg(avg_checkin) as avg_checkin
-        , avg(avg_communication) as avg_communication
-        , avg(avg_location) as avg_location
+        median(num_reviews) as median_reviews
+        , count(distinct case when avg_rating < 4 then listing_id end) / count(distinct listing_id) as prop_listing_under_4
     from
         airbnb_data.listing_performance_metrics
 ```
 
 <BigValue
     data={reviews_kpis}
-    value=avg_cleanliness
-    title="Cleanliness Score (avg.)"
-    fmt=num1
+    value=median_reviews
+    title="Reviews per Listing (median)"
+    fmt=num0
 />
 <BigValue
     data={reviews_kpis}
-    value=avg_checkin
-    title="Check-in Score (avg.)"
-    fmt=num1
-/>
-<BigValue
-    data={reviews_kpis}
-    value=avg_communication
-    title="Communication Score (avg.)"
-    fmt=num1
-/>
-<BigValue
-    data={reviews_kpis}
-    value=avg_location
-    title="Location Score (avg.)"
-    fmt=num1
+    value=prop_listing_under_4
+    title="Share of Listings with Score < 4"
+    fmt=pct0
 />
 
 ``` sql score_distribution
@@ -277,21 +262,22 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
         1
 ```
 
-<Note> test </Note>
 <BarChart
     data={score_distribution}
     x=score
     y=num_listings
     xFmt=num1
-    title="Distribution of Scores"
-    subTitle="Test"
+    title="Listing Score Distribution"
     echartsOptions={{
         xAxis: {
             min: 4.0,
             max: 5.0
-        }
+        },
+        series: [{
+            barWidth: '70%'
+        }]
     }}
-/> 
+/>
 
 ## What's Next?
 - [Connect your data sources](settings)

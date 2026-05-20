@@ -18,6 +18,7 @@ reviews as (
 base as (
     select
         c.listing_id,
+        l.host_id,
         round(
             100.0 * (sum(case when c.is_available = 'false' then 1 else 0 end) / count(c.listing_id)), 2
         ) as occupancy_rate_pct,
@@ -31,7 +32,7 @@ base as (
     from calendar c
     join listings l on c.listing_id = l.listing_id
     join reviews r on c.listing_id = r.listing_id
-    group by 1
+    group by 1, 2
 )
 
 select * from base

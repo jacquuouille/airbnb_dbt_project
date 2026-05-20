@@ -18,8 +18,21 @@ models:
     description: "Key performance metrics per listing (review score ratings)"
     columns:
       - name: listing_id
+        description: "Unique identifier for the listing."
         tests: 
           - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_listings')
+                field: listing_id
+      - name: host_id
+        description: "Unique identifier for the host of the listing."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_hosts')
+                field: host_id
       - name: occupancy_rate
         description: "Proportion of days the listing was unavailable"
       - name: num_reviews
@@ -70,6 +83,10 @@ models:
               arguments:
                 min_value: 0
                 max_value: 5
+    tests:
+        - dbt_utils.unique_combination_of_columns:
+            arguments:
+              combination_of_columns: ['listing_id', 'host_id']
 
   - name: listing_monthly_metrics
     description: "Aggregated monthly occupancy metrics by listing."

@@ -22,6 +22,7 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
     name=selected_item
     multiple=true
     value=listing_neighbourhood
+    selectAllByDefault=true
     title="Selected Neighbourhood"
 />
 
@@ -103,6 +104,7 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
 />
 
 #### Occupancy Breakdown (top 10)
+<Note> Click on as many dimension values as you want to filter the charts below.</Note>
 
 ``` sql dimension_grid
     select

@@ -26,7 +26,7 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
     title="Selected Neighbourhood"
 />
 
-``` sql kpis 
+``` sql main_kpis 
     select 
         count(distinct m.host_id) as num_hosts
         , count(distinct m.listing_id) as num_listings
@@ -47,25 +47,25 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
 <Note> Key figures from Vancouver's short-term rental market for the selected neighbourhoods. </Note>
 
 <BigValue
-    data={kpis}
+    data={main_kpis}
     value=num_listings
     title="All Listings"
     fmt=num0
 />
 <BigValue
-    data={kpis}
+    data={main_kpis}
     value=num_hosts
     title="Listed Hosts"
     fmt=num0
 />
 <BigValue
-    data={kpis}
+    data={main_kpis}
     value=avg_accurancy
     title="Occupancy Rate (avg.)"
     fmt=pct1
 />
 <BigValue
-    data={kpis}
+    data={main_kpis}
     value=avg_ratings
     title="Listing Ratings (avg.)"
     fmt=num1
@@ -222,12 +222,76 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
 <hr style="border: none; border-top: 1px solid #ffffff; width: 50%; margin: 3px auto;"/>
 
 ## Reviews 
-<Note> Key figures from Vancouver's short-term rental market for the selected neighbourhoods. </Note>
+<Note> Key figures from Vancouver's short-term rental market for the selected neighbourhoods (all-time guest reviews). </Note>
 
 <hr style="border: none; border-top: 1px solid #ffffff; width: 50%; margin: 3px auto;"/>
 
+``` sql reviews_kpis
+    select 
+        avg(avg_rating) as avg_rating
+        , avg(avg_accuracy) as avg_accuracy
+        , avg(avg_cleanliness) as avg_cleanliness
+        , avg(avg_checkin) as avg_checkin
+        , avg(avg_communication) as avg_communication
+        , avg(avg_location) as avg_location
+    from
+        airbnb_data.listing_performance_metrics
+```
 
+<BigValue
+    data={reviews_kpis}
+    value=avg_cleanliness
+    title="Cleanliness Score (avg.)"
+    fmt=num1
+/>
+<BigValue
+    data={reviews_kpis}
+    value=avg_checkin
+    title="Check-in Score (avg.)"
+    fmt=num1
+/>
+<BigValue
+    data={reviews_kpis}
+    value=avg_communication
+    title="Communication Score (avg.)"
+    fmt=num1
+/>
+<BigValue
+    data={reviews_kpis}
+    value=avg_location
+    title="Location Score (avg.)"
+    fmt=num1
+/>
 
+``` sql score_distribution
+    select 
+        round(avg_rating, 1) as score
+        , count(distinct listing_id) as num_listings
+    from
+        airbnb_data.listing_performance_metrics
+    where 
+        avg_rating <= 5 and score >= 4
+    group by 
+        1
+    order by 
+        1
+```
+
+<Note> test </Note>
+<BarChart
+    data={score_distribution}
+    x=score
+    y=num_listings
+    xFmt=num1
+    title="Distribution of Scores"
+    subTitle="Test"
+    echartsOptions={{
+        xAxis: {
+            min: 4.0,
+            max: 5.0
+        }
+    }}
+/> 
 
 ## What's Next?
 - [Connect your data sources](settings)

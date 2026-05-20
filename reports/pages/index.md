@@ -226,6 +226,9 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
 
 <hr style="border: none; border-top: 1px solid #ffffff; width: 50%; margin: 3px auto;"/>
 
+
+
+
 ## What's Next?
 - [Connect your data sources](settings)
 - Edit/add markdown files in the `pages` folder

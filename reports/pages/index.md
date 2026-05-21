@@ -132,38 +132,81 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
 
 <hr style="border: none; border-top: 1px solid #ffffff; width: 80%; margin: 15px auto;"/>
 
-## Listings
-<Note>See where and how listings are distributed across Vancouver.</Note>
+## Review Score
+<Note> Key figures from Vancouver's short-term rental market for the selected neighbourhoods (all-time guest reviews). </Note>
 
-``` sql listing_location
+<hr style="border: none; border-top: 1px solid #ffffff; width: 50%; margin: 3px auto;"/>
+
+``` sql reviews_kpis
     select 
-        m.listing_neighbourhood
-        , l.neighbourhood_latitude
-        , l.neighbourhood_longitude
-        , count(distinct m.listing_id) as num_listings
-    from 
-        airbnb_data.listing_monthly_metrics m
-    left join 
-        airbnb_data.listings l
+        median(m.num_reviews) as median_reviews
+        , count(distinct case when m.avg_rating < 4 then m.listing_id end) / count(distinct m.listing_id) as prop_listing_under_4
+    from
+        airbnb_data.listing_performance_metrics m
+    inner join 
+        airbnb_data.listings l 
         on m.listing_id = l.listing_id
     where 
-        m.listing_neighbourhood in ${inputs.selected_item.value} 
-    group by 
-        1, 2, 3
+        l.listing_neighbourhood in ${inputs.selected_item.value}
 ```
 
-<BubbleMap
-        data={listing_location}
-        lat=neighbourhood_latitude
-        long=neighbourhood_longitude
-        size=num_listings
-        sizeFmt=num0
-        value=num_listings
-        pointName=listing_neighbourhood
-        maxSize=40
-        height=300
-        title="Listings by Neighbourhood"
-    />
+<BigValue
+    data={reviews_kpis}
+    value=median_reviews
+    title="Reviews per Listing (median)"
+    fmt=num0
+/>
+<BigValue
+    data={reviews_kpis}
+    value=prop_listing_under_4
+    title="Share of Listings with Score < 4"
+    fmt=pct0
+/>
+
+``` sql score_distribution
+    select 
+        distinct score
+        , sum(num_listings) over(partition by score) / sum(num_listings) over() as num_listing_prop
+    from ( 
+        select 
+            round(m.avg_rating, 1) as score
+            , count(distinct m.listing_id) as num_listings
+        from
+            airbnb_data.listing_performance_metrics m
+        inner join 
+            airbnb_data.listings l 
+            on m.listing_id = l.listing_id
+        where 
+            l.listing_neighbourhood in ${inputs.selected_item.value} 
+            --and m.avg_rating <= 5 and m.avg_rating >= 4
+        group by 
+            1
+    ) a
+    order by 
+        1
+```
+
+<BarChart
+    data={score_distribution}
+    x=score
+    y=num_listing_prop
+    xFmt=num1
+    yFmt=pct1
+    chartAreaHeight=200
+    title="Listing Score Distribution"
+    echartsOptions={{
+        xAxis: {
+            min: 4.0,
+            max: 5.0
+        },
+        series: [{
+            barWidth: '70%'
+        }]
+    }}
+/>
+
+## Listings
+<Note>See where and how listings are distributed across Vancouver.</Note>
 
 ``` sql listings_by_room
     select 
@@ -220,63 +263,36 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
 
 </Grid>
 
-<hr style="border: none; border-top: 1px solid #ffffff; width: 50%; margin: 3px auto;"/>
-
-## Reviews 
-<Note> Key figures from Vancouver's short-term rental market for the selected neighbourhoods (all-time guest reviews). </Note>
-
-<hr style="border: none; border-top: 1px solid #ffffff; width: 50%; margin: 3px auto;"/>
-
-``` sql reviews_kpis
+``` sql listing_location
     select 
-        median(num_reviews) as median_reviews
-        , count(distinct case when avg_rating < 4 then listing_id end) / count(distinct listing_id) as prop_listing_under_4
-    from
-        airbnb_data.listing_performance_metrics
-```
-
-<BigValue
-    data={reviews_kpis}
-    value=median_reviews
-    title="Reviews per Listing (median)"
-    fmt=num0
-/>
-<BigValue
-    data={reviews_kpis}
-    value=prop_listing_under_4
-    title="Share of Listings with Score < 4"
-    fmt=pct0
-/>
-
-``` sql score_distribution
-    select 
-        round(avg_rating, 1) as score
-        , count(distinct listing_id) as num_listings
-    from
-        airbnb_data.listing_performance_metrics
+        m.listing_neighbourhood
+        , l.neighbourhood_latitude
+        , l.neighbourhood_longitude
+        , '/neighbourhood?neighbourhood=' || m.listing_neighbourhood as link
+        , count(distinct m.listing_id) as num_listings
+    from 
+        airbnb_data.listing_monthly_metrics m
+    left join 
+        airbnb_data.listings l
+        on m.listing_id = l.listing_id
     where 
-        avg_rating <= 5 and score >= 4
+        m.listing_neighbourhood in ${inputs.selected_item.value} 
     group by 
-        1
-    order by 
-        1
+        1, 2, 3
 ```
 
-<BarChart
-    data={score_distribution}
-    x=score
-    y=num_listings
-    xFmt=num1
-    title="Listing Score Distribution"
-    echartsOptions={{
-        xAxis: {
-            min: 4.0,
-            max: 5.0
-        },
-        series: [{
-            barWidth: '70%'
-        }]
-    }}
+<BubbleMap
+    data={listing_location}
+    lat=neighbourhood_latitude
+    long=neighbourhood_longitude
+    size=num_listings
+    sizeFmt=num0
+    value=num_listings
+    pointName=listing_neighbourhood
+    height=460
+    maxSize=50
+    title="Click a neighbourhood to explore"
+    link=link
 />
 
 ## What's Next?

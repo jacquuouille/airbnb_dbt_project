@@ -16,6 +16,8 @@ joined as (
         l.listing_name,
         l.listing_description,
         l.listing_neighbourhood,
+        l.listing_latitude,
+        l.listing_longitude,
         n.neighbourhood_latitude,
         n.neighbourhood_longitude,
         l.property_type,

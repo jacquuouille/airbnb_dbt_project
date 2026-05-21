@@ -268,7 +268,7 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
         m.listing_neighbourhood
         , l.neighbourhood_latitude
         , l.neighbourhood_longitude
-        , '/neighbourhood?neighbourhood=' || m.listing_neighbourhood as link
+        , lower(replace(m.listing_neighbourhood, ' ', '-')) as link
         , count(distinct m.listing_id) as num_listings
     from 
         airbnb_data.listing_monthly_metrics m
@@ -278,8 +278,11 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
     where 
         m.listing_neighbourhood in ${inputs.selected_item.value} 
     group by 
-        1, 2, 3
+        1, 2, 3, 4
 ```
+
+#### Listings Location
+<Note> → click on a neighbourhood to explore its listings in detail.</Note> 
 
 <BubbleMap
     data={listing_location}
@@ -289,9 +292,8 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
     sizeFmt=num0
     value=num_listings
     pointName=listing_neighbourhood
-    height=460
+    height=400
     maxSize=50
-    title="Click a neighbourhood to explore"
     link=link
 />
 

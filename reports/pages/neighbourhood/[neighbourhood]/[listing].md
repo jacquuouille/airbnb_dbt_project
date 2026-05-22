@@ -25,7 +25,7 @@
 
 <Grid cols=2>
 
-<LineChart
+<AreaChart
     data={monthly_bookings}
     x=month
     y=occupancy_rate_pct

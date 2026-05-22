@@ -1,10 +1,46 @@
 # {params.neighbourhood.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
 
-``` sql monthly_bookings
+``` sql occupancy
+    with bookings_all_neighbourhoods as (
+        select 
+            avg(occupancy_rate_pct) as occupancy_rate_pct_all_neighbourhoods
+        from 
+            airbnb_data.listing_monthly_metrics
+    )
+
+    select 
+        b.occupancy_rate_pct_all_neighbourhoods
+        , avg(m.occupancy_rate_pct) / 100 as occupancy_rate
+        , avg(m.occupancy_rate_pct) - (b.occupancy_rate_pct_all_neighbourhoods) as diff
+    from
+        airbnb_data.listing_monthly_metrics m
+    inner join 
+        airbnb_data.listings l
+        on m.listing_id = l.listing_id
+    cross join
+        bookings_all_neighbourhoods b
+    where 
+        lower(replace(m.listing_neighbourhood, ' ', '-')) = '${params.neighbourhood}'
+    group by 
+        1
+```
+
+<BigValue
+    data={occupancy}
+    value=occupancy_rate
+    title="Occupancy"
+    comparison=diff
+    comparisonFmt=num1
+    comparisonTitle="vs. City Average (pp)"
+    <Info description="pp: percentage points"
+    fmt=pct1
+/>
+
+``` sql monthly_occupancy
     with bookings_all_neighbourhoods as (
         select 
             month 
-            , sum(num_nights_booked) / count(distinct listing_neighbourhood) as avg_bookings_all_neighbourhoods
+            , avg(occupancy_rate_pct) / 100 as monthly_occupancy_rate_pct_all_neighbourhoods
         from 
             airbnb_data.listing_monthly_metrics
         group by 
@@ -12,10 +48,10 @@
     )
 
     select 
-        m.month 
-        , b.avg_bookings_all_neighbourhoods
-        , sum(m.num_nights_booked) as bookings
-    from 
+        distinct m.month
+        , b.monthly_occupancy_rate_pct_all_neighbourhoods
+        , avg(m.occupancy_rate_pct) / 100 as monthly_occupancy_rate_pct
+    from
         airbnb_data.listing_monthly_metrics m
     inner join 
         airbnb_data.listings l
@@ -30,11 +66,11 @@
 ```
 
 <LineChart
-    data={monthly_bookings}
+    data={monthly_occupancy}
     x=month
-    y={['bookings', 'avg_bookings_all_neighbourhoods']}
+    y={['monthly_occupancy_rate_pct', 'monthly_occupancy_rate_pct_all_neighbourhoods']}
     chartAreaHeight=300
-    title="Bookings Over Time"
+    title="Occupancy Over Time vs. Vancouver Average"
     markers=true
     markerShape=emptyCircle
     colorPalette={

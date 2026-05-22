@@ -11,12 +11,25 @@ with calendar as (
         case when is_available = 'false' then 1 else 0 end as is_booked
     from {{ ref('fct_calendar') }}
 
+),
+
+listings as (
+
+    select
+        listing_id,
+        host_id,
+        listing_neighbourhood,
+        property_type,
+        room_type
+    from {{ ref('dim_listings') }}
+
 )
 
 , monthly_occupancy as (
 
     select 
         date_trunc(c.calendar_date, month) as month,
+        l.host_id,
         c.listing_id,
         l.listing_neighbourhood,
         l.property_type,
@@ -29,10 +42,10 @@ with calendar as (
     from 
         calendar c
     inner join 
-        {{ ref('dim_listings') }} l 
+        listings l 
         on c.listing_id = l.listing_id
     group by 
-        1, 2, 3, 4, 5
+        1, 2, 3, 4, 5, 6
 
 )
 

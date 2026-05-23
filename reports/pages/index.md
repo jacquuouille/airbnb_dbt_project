@@ -192,7 +192,7 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
     y=num_listing_prop
     xFmt=num1
     yFmt=pct1
-    chartAreaHeight=200
+    chartAreaHeight=210
     title="Listing Score Distribution"
     echartsOptions={{
         xAxis: {
@@ -207,6 +207,73 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
 
 ## Listings
 <Note>See where and how listings are distributed across Vancouver.</Note>
+
+``` sql num_listings_host
+    with listings as (
+        select 
+            m.host_id
+            , count(distinct m.listing_id) as num_listings
+        from 
+            airbnb_data.listing_performance_metrics m
+        inner join 
+            airbnb_data.listings l 
+            on m.listing_id = l.listing_id
+        where 
+            l.listing_neighbourhood in ${inputs.selected_item.value} 
+        group by 
+            1
+    )
+
+    select 
+        count(distinct case when num_listings > 1 then host_id end) / count(distinct host_id) as prop
+    from 
+        listings
+```
+
+<BigValue
+    data={num_listings_host}
+    value=prop
+    title="Share of Hosts with Multiple Listings"
+    fmt=pct1
+/>
+
+``` sql listing_location
+    select 
+        m.listing_neighbourhood
+        , l.neighbourhood_latitude
+        , l.neighbourhood_longitude
+        , lower(replace(m.listing_neighbourhood, ' ', '-')) as link
+        , count(distinct m.listing_id) as num_listings
+    from 
+        airbnb_data.listing_monthly_metrics m
+    left join 
+        airbnb_data.listings l
+        on m.listing_id = l.listing_id
+    where 
+        m.listing_neighbourhood in ${inputs.selected_item.value} 
+    group by 
+        1, 2, 3, 4
+```
+
+#### Listings Location 
+
+<BubbleMap
+    data={listing_location}
+    lat=neighbourhood_latitude
+    long=neighbourhood_longitude
+    size=num_listings
+    sizeFmt=num0
+    value=num_listings
+    pointName=listing_neighbourhood
+    height=350
+    maxSize=50
+    tooltip={[
+        {id: 'listing_neighbourhood', fmt:'id', showColumnName:false, valueClass: 'text-lg font-semibold'},
+        {id: 'num_listings', fmt: 'num0', fieldClass: 'text-[grey]', valueClass: 'text-[black]'},
+        {id: 'link', showColumnName: false, contentType: 'link', linkLabel: 'Click to explore', valueClass: 'font-bold mt-1'}
+        ]}
+    link=link
+/>
 
 ``` sql listings_by_room
     select 
@@ -248,7 +315,7 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
         series: [
             {
                 type: 'pie',
-                radius: ['80%', '70%'],
+                radius: ['73%', '65%'],
                 data: [...listings_by_room],
             }
         ]
@@ -262,40 +329,6 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
 </DataTable>
 
 </Grid>
-
-``` sql listing_location
-    select 
-        m.listing_neighbourhood
-        , l.neighbourhood_latitude
-        , l.neighbourhood_longitude
-        , lower(replace(m.listing_neighbourhood, ' ', '-')) as link
-        , count(distinct m.listing_id) as num_listings
-    from 
-        airbnb_data.listing_monthly_metrics m
-    left join 
-        airbnb_data.listings l
-        on m.listing_id = l.listing_id
-    where 
-        m.listing_neighbourhood in ${inputs.selected_item.value} 
-    group by 
-        1, 2, 3, 4
-```
-
-#### Listings Location
-<Note> → click on a neighbourhood to explore its listings in detail.</Note> 
-
-<BubbleMap
-    data={listing_location}
-    lat=neighbourhood_latitude
-    long=neighbourhood_longitude
-    size=num_listings
-    sizeFmt=num0
-    value=num_listings
-    pointName=listing_neighbourhood
-    height=400
-    maxSize=50
-    link=link
-/>
 
 ## What's Next?
 - [Connect your data sources](settings)

@@ -13,7 +13,7 @@ with calendar as (
 
 ),
 
-listing as (
+listings as (
 
     select
         listing_id,
@@ -42,7 +42,7 @@ listing as (
     from 
         calendar c
     inner join 
-        listing l 
+        listings l 
         on c.listing_id = l.listing_id
     group by 
         1, 2, 3, 4, 5, 6

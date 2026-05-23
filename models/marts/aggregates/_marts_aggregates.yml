@@ -95,6 +95,14 @@ models:
         description: "Calendar date truncated to the month level."
         tests:
           - not_null
+      - name: host_id
+        description: "Unique identifier for the host of the listing."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_hosts')
+                field: host_id
       - name: listing_id
         description: "Unique identifier for the listing."
         tests:

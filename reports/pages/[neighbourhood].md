@@ -99,7 +99,7 @@
         4 desc
 ```
 
-<DataTable data={top_listing_num_nights_booked} search=true title="Top Listings by Occupancy" subtitle="→ click on a listing name to explore its details, or view the listing on the Airbnb." link=link>
+<DataTable data={top_listing_num_nights_booked} search=true title="Top Listings by Occupancy" subtitle="→ Click on a listing name to explore its details, or view the listing on the Airbnb." link=link>
     <Column id=listing_name/>
     <Column id=listing_url contentType=link linkLabel="View Listing →"/>
     <Column id=occupancy_rate_pct title="Occupancy" contentType=colorscale/>

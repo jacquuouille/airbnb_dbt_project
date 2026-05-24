@@ -61,13 +61,13 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
 <BigValue
     data={main_kpis}
     value=avg_accurancy
-    title="Occupancy Rate (avg.)"
+    title="Occupancy (avg.)"
     fmt=pct1
 />
 <BigValue
     data={main_kpis}
     value=avg_ratings
-    title="Listing Ratings (avg.)" 
+    title="Score Rating ★ (avg.)" 
     <Info description="Out of 5"
     fmt=num1
 />
@@ -159,7 +159,7 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
 <BigValue
     data={reviews_kpis}
     value=prop_listing_under_4
-    title="Share of Listings with Score < 4"
+    title="Share of Listings with Score Rating < 4"
     fmt=pct0
 />
 

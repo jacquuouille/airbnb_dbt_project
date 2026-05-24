@@ -1,5 +1,9 @@
 # {params.listing.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
 
+<span class="text-sm hover:underline font-semibold"><a href={listings_kpis[0].listing_url} target="_blank"> → View Listing</a></span>
+
+<hr style="border: none; border-top: 1px solid #ffffff; width: 50%; margin: 10px auto;"/>
+
 ```sql listings_kpis
     select 
         m.listing_id
@@ -19,16 +23,46 @@
         l.listing_name = '${params.listing}' 
 ```
 
-<span class="text-sm hover:underline font-semibold"><a href={listings_kpis[0].listing_url} target="_blank"> → View Listing</a></span>
-
-<hr style="border: none; border-top: 1px solid #ffffff; width: 50%; margin: 10px auto;"/>
-
 <BigValue
     data={listings_kpis}
     value=occupancy_rate_pct
     title="Occupancy"
     fmt=pct1
 />
+
+``` sql listing_description 
+    select 
+        regexp_replace(listing_description, '<[^>]+>', ' ', 'g') as listing_description
+    from 
+        airbnb_data.listings
+    where 
+        listing_name = '${params.listing}'
+```
+
+### Listing Description
+<span class="text-sm">
+    <Value 
+        data={listing_description} 
+        column=listing_description 
+    />
+</span>
+
+``` sql listing_details
+    select 
+        property_type
+        , room_type
+        , accommodates
+        , bathrooms
+        , beds
+    from
+        airbnb_data.listings
+    where 
+        listing_name = '${params.listing}'
+```
+
+<DataTable data={listing_details} />
+
+<hr style="border: none; border-top: 1px solid #ffffff; width: 50%; margin: 10px auto;"/>
 
 ```sql monthly_bookings
     select 

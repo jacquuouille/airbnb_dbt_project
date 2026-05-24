@@ -1,0 +1,1 @@
+select * from `airbnb-495108.airbnb_data_staging.dim_reviews`

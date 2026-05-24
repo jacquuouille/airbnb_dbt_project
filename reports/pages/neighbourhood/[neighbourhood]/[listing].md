@@ -10,17 +10,23 @@
         , l.listing_url
         , h.host_name
         , m.occupancy_rate_pct / 100 as occupancy_rate_pct
+        , count(distinct review_id) as num_reviews
     from 
         airbnb_data.listing_performance_metrics m
     left join
         airbnb_data.hosts h
         on m.host_id = h.host_id
+    left join
+        airbnb_data.reviews r
+        on m.listing_id = r.listing_id
     inner join
         airbnb_data.listings l
         on m.listing_id = l.listing_id
         and m.host_id = h.host_id
     where 
         l.listing_name = '${params.listing}' 
+    group by 
+        1, 2, 3, 4
 ```
 
 <BigValue
@@ -28,6 +34,12 @@
     value=occupancy_rate_pct
     title="Occupancy"
     fmt=pct1
+/>
+<BigValue
+    data={listings_kpis}
+    value=num_reviews
+    title="Reviews"
+    fmt=num0
 />
 
 ``` sql listing_description 
@@ -100,9 +112,6 @@
     pointName=point_label
     height=300
     title="Listing Location"
-    tooltip={[
-        {id: 'listing_url', showColumnName: false, contentType: 'link', linkLabel: 'View listing', valueClass: 'font-bold mt-1', valueClass: 'font-bold text-black mt-1'}
-        ]}
     link=listing_url
 />
 
@@ -134,10 +143,51 @@
     data={listing_review_scores}
     x=category
     y=score
-    yFmt=num0
     swapXY=true
     chartAreaHeight=250
     labels=true
     labelFmt=num1
     title="Reviews by Category"
 />
+
+``` sql listing_reviews
+    select 
+        distinct r.reviewer_name
+        , r.review_date
+        , r.review_comments
+    from 
+        airbnb_data.reviews r
+    inner join
+        airbnb_data.listings l
+        on r.listing_id = l.listing_id
+    where 
+        l.listing_name = '${params.listing}'
+    order by 
+        2 desc, 1, 3
+```
+
+<DataTable 
+    data={listing_reviews}
+    title="Listings Comments"
+/>
+
+``` sql listings_host
+    select 
+        h.host_name
+        , h.host_listings_count
+        , h.host_profile_url
+        , '/host/' || lower(replace(h.host_name, ' ', '-')) as link
+    from 
+        airbnb_data.hosts h
+    inner join 
+        airbnb_data.listings l
+        on h.host_id = l.host_id
+    where 
+        l.listing_name = '${params.listing}'
+```
+
+<DataTable data={listings_host} title="Host Details" subtitle="→ Click on the host name to explore its details, or view its profile on Airbnb." link=link>
+    <Column id=host_name/>
+    <Column id=host_listings_count title="Listings"/>
+    <Column id=host_profile_url contentType=link linkLabel="View Profile →" title="Profile URL" />
+</DataTable>

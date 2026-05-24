@@ -10,6 +10,7 @@
         , l.listing_url
         , h.host_name
         , m.occupancy_rate_pct / 100 as occupancy_rate_pct
+        , m.avg_rating as score_review
         , count(distinct review_id) as num_reviews
     from 
         airbnb_data.listing_performance_metrics m
@@ -26,7 +27,7 @@
     where 
         l.listing_name = '${params.listing}' 
     group by 
-        1, 2, 3, 4
+        1, 2, 3, 4, 5
 ```
 
 <BigValue
@@ -34,6 +35,12 @@
     value=occupancy_rate_pct
     title="Occupancy"
     fmt=pct1
+/>
+<BigValue
+    data={listings_kpis}
+    value=score_review
+    title="Score Review ★"
+    fmt=num2
 />
 <BigValue
     data={listings_kpis}
@@ -176,7 +183,7 @@
         h.host_name
         , h.host_listings_count
         , h.host_profile_url
-        , '/host/' || lower(replace(h.host_name, ' ', '-')) as link
+        , '/host/' || h.host_id as link
     from 
         airbnb_data.hosts h
     inner join 

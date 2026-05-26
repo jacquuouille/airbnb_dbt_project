@@ -1,0 +1,74 @@
+--- 
+title : Listings 
+order : 2
+--- 
+
+```sql neighbourhoods_names
+    select 
+       distinct listing_neighbourhood
+        , listing_name
+    from
+        airbnb_data.listings 
+```
+
+<Dropdown
+    data={neighbourhoods_names}
+    name=selected_item
+    value=listing_neighbourhood
+    defaultValue="Arbutus Ridge"
+    title="Selected Neighbourhood"
+/>
+
+```sql listing_kpis
+    select 
+        count(distinct listing_id) as num_listings
+    from
+        airbnb_data.listings
+    where 
+        listing_neighbourhood = '${inputs.selected_item.value}'
+```
+
+<BigValue
+    data={listing_kpis}
+    value=num_listings
+    title="All Listings"
+    fmt=num0
+/>
+
+``` sql listings_details
+    select 
+        l.listing_name
+        , l.property_type
+        , l.room_type
+        , l.listing_url
+        , '/neighbourhood/' || lower(replace(l.listing_neighbourhood, ' ', '-')) 
+    || '/' || l.listing_name as link
+        , m.avg_rating as score_review
+        , count(distinct r.review_id) as num_reviews
+    from 
+        airbnb_data.listings l
+    inner join 
+        airbnb_data.hosts h
+        on l.host_id = h.host_id
+    left join 
+        airbnb_data.listing_performance_metrics m
+        on h.host_id = m.host_id
+        and l.listing_id = m.listing_id
+    left join 
+        airbnb_data.reviews r
+        on l.listing_id = r.listing_id
+    where 
+        l.listing_neighbourhood = '${inputs.selected_item.value}'
+    group by 
+        1, 2, 3, 4, 5, 6
+    order by 
+        7 desc
+```
+
+<DataTable data={listings_details} title="Listings" subtitle="→ Click on a listing name to explore its details" search=true link=link rows=20>
+    <Column id=listing_name/>
+    <Column id=room_type/>
+    <Column id=num_reviews contentType=bar backgroundColor=#ebebeb title="Reviews" fmt=num0/>
+    <Column id=score_review title="Score" contentType=colorscale fmt=num1/>
+    
+</DataTable> 

@@ -44,8 +44,8 @@ Explore and export Vancouver's Airbnb listings by neighbourhood. Use the filter 
 ``` sql listings_details
     select 
         l.listing_name
-        , l.property_type
-        , l.room_type
+        , l.listing_property_type
+        , l.listing_room_type
         , l.listing_url
         , '/neighbourhood/' || lower(replace(l.listing_neighbourhood, ' ', '-')) 
     || '/' || l.listing_name as link
@@ -73,7 +73,7 @@ Explore and export Vancouver's Airbnb listings by neighbourhood. Use the filter 
 
 <DataTable data={listings_details} title="Listings" subtitle="→ Click on a listing name to explore its details" search=true link=link rows=20>
     <Column id=listing_name/>
-    <Column id=room_type/>
+    <Column id=listing_room_type/>
     <Column id=num_reviews contentType=bar backgroundColor=#ebebeb title="Reviews" fmt=num0/>
     <Column id=score_review title="Score" contentType=colorscale fmt=num1/>
     

@@ -3,4 +3,4 @@ select
 from 
     {{ ref('listing_monthly_metrics') }}
 where 
-    num_nights_booked = 0 and occupancy_rate_pct > 0
+    num_booked_nights = 0 and pct_occupancy > 0

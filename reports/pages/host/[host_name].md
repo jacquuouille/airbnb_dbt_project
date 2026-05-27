@@ -103,8 +103,8 @@
 ``` sql hosts_listings_details
     select 
         l.listing_name
-        , l.property_type
-        , l.room_type
+        , l.listing_property_type
+        , l.listing_room_type
         , l.listing_url
         , '/neighbourhood/' || lower(replace(l.listing_neighbourhood, ' ', '-')) 
     || '/' || l.listing_name as link
@@ -132,7 +132,7 @@
 
 <DataTable data={hosts_listings_details} title="Host's Listings" subtitle="→ Click on a listing name to explore its details" search=true link=link>
     <Column id=listing_name/>
-    <Column id=room_type/>
+    <Column id=listing_room_type/>
     <Column id=num_reviews contentType=bar backgroundColor=#ebebeb title="Reviews" fmt=num0/>
     <Column id=score_review contentType=colorscale fmt=num1/>
     
@@ -144,8 +144,8 @@
         , l.listing_neighbourhood
         , l.listing_latitude
         , l.listing_longitude
-        , l.property_type
-        , l.room_type
+        , l.listing_property_type
+        , l.listing_room_type
     from 
         airbnb_data.listings l
     inner join 

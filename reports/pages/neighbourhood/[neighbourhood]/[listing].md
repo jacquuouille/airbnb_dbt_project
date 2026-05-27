@@ -9,11 +9,15 @@
         m.listing_id
         , l.listing_url
         , h.host_name
-        , m.occupancy_rate_pct / 100 as occupancy_rate_pct
-        , m.avg_rating as score_review
+        , p.avg_rating as score_review
+        , avg(m.pct_occupancy) / 100 as occupancy_rate_pct
         , count(distinct review_id) as num_reviews
     from 
-        airbnb_data.listing_performance_metrics m
+        airbnb_data.listing_monthly_metrics m
+    inner join 
+        airbnb_data.listing_performance_metrics p
+        on m.listing_id = p.listing_id 
+        and m.host_id = p.host_id
     left join
         airbnb_data.hosts h
         on m.host_id = h.host_id
@@ -27,7 +31,7 @@
     where 
         l.listing_name = '${params.listing}' 
     group by 
-        1, 2, 3, 4, 5
+        1, 2, 3, 4
 ```
 
 <BigValue
@@ -68,8 +72,8 @@
 
 ``` sql listing_details
     select 
-        property_type
-        , room_type
+        listing_property_type
+        , listing_room_type
         , accommodates
         , bathrooms
         , beds
@@ -85,14 +89,14 @@
 
 ```sql monthly_bookings
     select 
-        m.month
+        m.month_date
         , l.listing_name
         , l.listing_longitude
         , l.listing_latitude
         , l.listing_url
         , round(listing_latitude::numeric, 4) || ', ' || round(listing_longitude::numeric, 4) || ')' as point_label
         , h.host_name
-        , sum(num_nights_booked) as booked_nights
+        , sum(m.num_booked_nights) as booked_nights
     from 
         airbnb_data.listing_monthly_metrics m
     left join 
@@ -124,7 +128,7 @@
 
 <LineChart
     data={monthly_bookings}
-    x=month
+    x=month_date
     y=booked_nights
     markers=true
     markerShape=emptyCircle

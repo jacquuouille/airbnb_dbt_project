@@ -30,10 +30,14 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
     select 
         count(distinct m.host_id) as num_hosts
         , count(distinct m.listing_id) as num_listings
-        , avg(m.avg_rating) as avg_ratings 
-        , avg(m.occupancy_rate_pct)/100 as avg_accurancy
+        , avg(p.avg_rating) as avg_ratings 
+        , avg(m.pct_occupancy)/100 as avg_accurancy
     from 
-        airbnb_data.listing_performance_metrics m
+        airbnb_data.listing_monthly_metrics m
+    inner join 
+        airbnb_data.listing_performance_metrics p
+        on m.listing_id = p.listing_id 
+        and m.host_id = p.host_id
     inner join 
         airbnb_data.listings l 
         on m.listing_id = l.listing_id
@@ -79,8 +83,8 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
 
 ``` sql monthly_occupancy
     select 
-        month
-        , avg(m.occupancy_rate_pct) / 100 as occupancy_rate_pct
+        month_date
+        , avg(m.pct_occupancy) / 100 as occupancy_rate_pct
     from 
         airbnb_data.listing_monthly_metrics m
     inner join 
@@ -96,7 +100,7 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
 
 <AreaChart
     data={monthly_occupancy}
-    x=month
+    x=month_date
     y=occupancy_rate_pct
     yMin=0
     yMax=0.8
@@ -110,22 +114,24 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
 ``` sql dimension_grid
     select
         l.listing_neighbourhood
-        , l.property_type
-        , l.room_type 
+        , l.listing_property_type
+        , l.listing_room_type 
         , l.listing_name
-        , m.occupancy_rate_pct
+        , avg(m.pct_occupancy) as avg_pct_occupancy
     from 
-        listing_performance_metrics m
+        airbnb_data.listing_monthly_metrics m
     inner join 
-        listings l 
+        airbnb_data.listings l 
         on m.listing_id = l.listing_id
     where 
         l.listing_neighbourhood in ${inputs.selected_item.value}
+    group by 
+        1, 2, 3, 4
 ```
 
 <DimensionGrid
     data={dimension_grid}
-    metric='avg(occupancy_rate_pct)'
+    metric='avg(avg_pct_occupancy)'
     name=multi_dimensions
     multiple
 />
@@ -243,7 +249,7 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
         , l.neighbourhood_latitude
         , l.neighbourhood_longitude
         , lower(replace(m.listing_neighbourhood, ' ', '-')) as link
-        , count(distinct m.listing_id) as num_listings
+        , count(distinct m.listing_id) as listings
     from 
         airbnb_data.listing_monthly_metrics m
     left join 
@@ -261,15 +267,15 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
     data={listing_location}
     lat=neighbourhood_latitude
     long=neighbourhood_longitude
-    size=num_listings
+    size=listings
     sizeFmt=num0
-    value=num_listings
+    value=listings
     pointName=listing_neighbourhood
     height=350
     maxSize=50
     tooltip={[
         {id: 'listing_neighbourhood', fmt:'id', showColumnName:false, valueClass: 'text-lg font-semibold'},
-        {id: 'num_listings', fmt: 'num0', fieldClass: 'text-[grey]', valueClass: 'text-[black]'},
+        {id: 'listings', fmt: 'num0', fieldClass: 'text-[grey]', valueClass: 'text-[black]'},
         {id: 'link', showColumnName: false, contentType: 'link', linkLabel: 'Click to explore', valueClass: 'font-bold mt-1'}
         ]}
     link=link
@@ -277,7 +283,7 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
 
 ``` sql listings_by_room
     select 
-        room_type as name
+        listing_room_type as name
         , count(distinct listing_id) as value
     from 
         airbnb_data.listings
@@ -289,8 +295,8 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
 
 ``` sql listing_by_room_property 
     select 
-        room_type 
-        , property_type
+        listing_room_type 
+        , listing_property_type
         , count(distinct listing_id) as num_listings
     from 
          airbnb_data.listings
@@ -324,15 +330,19 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
 />
 
 <DataTable data={listing_by_room_property} title="Listings by Property Type">
-    <Column id=property_type />
+    <Column id=listing_property_type />
     <Column id=num_listings title="Listings" contentType=bar barColor=#aecfaf/> 
 </DataTable>
 
 </Grid>
 
 ## Get in Touch
+<p style="font-size: 0.85rem; color: #666;">
 Have questions, feedback, or just want to connect?
+</p>
 
-- Message me on [LinkedIn](www.linkedin.com/in/jacques-hervochon-27448898)
-- Reach me by [Email](mailto:jacqueshervochon@gmail.com)
-- Check out my work on [GitHub](https://github.com/yourprofile)
+<hr style="border: none; border-top: 1px solid #ffffff; width: 50%; margin: 10px auto;"/>
+
+- Message me on [**LinkedIn**](www.linkedin.com/in/jacques-hervochon-27448898)
+- Reach me by [**Email**](mailto:jacqueshervochon@gmail.com)
+- Check out my work on [**GitHub**](https://github.com/yourprofile)

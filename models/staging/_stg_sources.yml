@@ -68,9 +68,9 @@ models:
                 max_value: 180
       - name: listing_neighbourhood
         description: "Standardized neighborhood where the listing is located."
-      - name: property_type
+      - name: listing_property_type
         description: "Type of property (e.g., apartment, house)."
-      - name: room_type
+      - name: listing_room_type
         description: "Type of room offered (entire home, private room, shared room)."
       - name: accommodates
         description: "Maximum number of guests the listing can accommodate."

@@ -91,7 +91,7 @@ models:
   - name: listing_monthly_metrics
     description: "Aggregated monthly occupancy metrics by listing."
     columns:
-      - name: month
+      - name: month_date
         description: "Calendar date truncated to the month level."
         tests:
           - not_null
@@ -119,34 +119,25 @@ models:
               arguments:
                 to: ref('dim_listings')
                 field: listing_neighbourhood
-      - name: property_type
+      - name: listing_property_type
         description: "Type of property (e.g., Apartment, House, Condo)."
         tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('dim_listings')
-                field: property_type
-      - name: room_type
+                field: listing_property_type
+      - name: listing_room_type
         description: "Type of room offered (e.g., Entire home/apt, Private room, Shared room)."
         tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('dim_listings')
-                field: room_type
-      - name: num_nights_booked
-        description: "Total number of nights the listing was booked during the month."
-      - name: num_total_nights
-        description: "Total number of nights in the month for this listing (usually 28–31 nights depending on month)."
-      - name: occupancy_rate
+                field: listing_room_type
+      - name: num_booked_nights
+        description: "Total number of nights booked by customers for the listing during the month."
+      - name: num_available_nights
+        description: "Total number of nights available in the month for this listing (usually 28–31 nights depending on month)."
+      - name: pct_occupancy
         description: "Calculated occupancy rate for the month."
-
-  - name: monthly_reviews
-    description: "Review volume per month across all listings."
-    columns:
-      - name: review_month
-        tests: 
-            - not_null
-      - name: review_count
-        description: "Total reviews received in the given month"

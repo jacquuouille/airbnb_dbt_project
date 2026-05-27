@@ -3,8 +3,8 @@ title: Overview
 ---
 
 <p style="font-size: 0.85rem; color: #666;">
-Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" target="_blank" style="font-style: italic; color: #666;">InsideAirbnb.com</a> data. Analyze occupancy rates, amenities, and review trends across neighbourhoods, room types and property categories, with interactive neighbourhood filter to slice and explore the data your way.
-</p> 
+Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" target="_blank" class="hover:underline" style="font-style: italic; color: #666;">InsideAirbnb.com</a> data. Analyze occupancy rates, amenities, and review trends across neighbourhoods, room types and property categories, with interactive neighbourhood filter to slice and explore the data your way.
+</p>
 
 <hr style="border: none; border-top: 1px solid #ffffff; width: 50%; margin: 10px auto;"/>
 
@@ -330,12 +330,9 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
 
 </Grid>
 
-## What's Next?
-- [Connect your data sources](settings)
-- Edit/add markdown files in the `pages` folder
-- Deploy your project with [Evidence Cloud](https://evidence.dev/cloud)
+## Get in Touch
+Have questions, feedback, or just want to connect?
 
-## Get Support
-- Message us on [Slack](https://slack.evidence.dev/)
-- Read the [Docs](https://docs.evidence.dev/)
-- Open an issue on [Github](https://github.com/evidence-dev/evidence)
+- Message me on [LinkedIn](www.linkedin.com/in/jacques-hervochon-27448898)
+- Reach me by [Email](mailto:jacqueshervochon@gmail.com)
+- Check out my work on [GitHub](https://github.com/yourprofile)

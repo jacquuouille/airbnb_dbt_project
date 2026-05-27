@@ -1,7 +1,12 @@
 --- 
-title : Listings 
-order : 2
+title : Listings
 --- 
+
+<p style="font-size: 0.85rem; color: #666;">
+Explore and export Vancouver's Airbnb listings by neighbourhood. Use the filter below to select a neighbourhood and browse all active listings.
+</p>
+
+<hr style="border: none; border-top: 1px solid #ffffff; width: 50%; margin: 10px auto;"/>
 
 ```sql neighbourhoods_names
     select 
@@ -15,6 +20,7 @@ order : 2
     data={neighbourhoods_names}
     name=selected_item
     value=listing_neighbourhood
+    multiple=true
     defaultValue="Arbutus Ridge"
     title="Selected Neighbourhood"
 />
@@ -25,7 +31,7 @@ order : 2
     from
         airbnb_data.listings
     where 
-        listing_neighbourhood = '${inputs.selected_item.value}'
+        listing_neighbourhood in ${inputs.selected_item.value}
 ```
 
 <BigValue
@@ -58,7 +64,7 @@ order : 2
         airbnb_data.reviews r
         on l.listing_id = r.listing_id
     where 
-        l.listing_neighbourhood = '${inputs.selected_item.value}'
+        l.listing_neighbourhood in ${inputs.selected_item.value}
     group by 
         1, 2, 3, 4, 5, 6
     order by 

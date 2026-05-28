@@ -110,8 +110,8 @@
     markerShape=emptyCircle
     colorPalette={
         [
-        '#000000' ,
-        '#8b8b8b'
+        '#a4b8fc' ,
+        '#515151'
         ]
     }
 />
@@ -120,7 +120,10 @@
     select 
         distinct l.listing_name
         , l.listing_url
-        , '/neighbourhood/' || lower(l.listing_neighbourhood) || '/' || l.listing_name as link
+        , '/neighbourhood/' 
+        || lower(replace(l.listing_neighbourhood, ' ', '-')) 
+        || '/' 
+        || l.listing_id::bigint as link
         , m.pct_occupancy / 100 as occupancy_rate_pct
     from 
         airbnb_data.listing_monthly_metrics m
@@ -135,5 +138,18 @@
 
 <DataTable data={top_listing_num_nights_booked} search=true title="Top Listings by Occupancy" subtitle="→ Click on a listing name to explore its details" link=link>
     <Column id=listing_name/>
-    <Column id=occupancy_rate_pct title="Occupancy" contentType=colorscale/>
+    <Column id=occupancy_rate_pct title="Occupancy" contentType=colorscale colorScale={['#e6ecff', '#a4b8fc']}/>
 </DataTable> 
+
+<hr style="border: none; border-top: 1px solid #ffffff; width: 50%; margin: 10px auto;"/>
+
+## Get in Touch
+<p style="font-size: 0.85rem; color: #666;">
+Have questions, feedback, or just want to connect?
+</p>
+
+<hr style="border: none; border-top: 1px solid #ffffff; width: 50%; margin: 10px auto;"/>
+
+- Message me on [**LinkedIn**](www.linkedin.com/in/jacques-hervochon-27448898)
+- Reach me by [**Email**](mailto:jacqueshervochon@gmail.com)
+- Check out my work on [**GitHub**](https://github.com/yourprofile)

@@ -1,4 +1,4 @@
-# {params.listing.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
+# {listings_kpis[0].listing_name}
 
 <span class="text-sm hover:underline font-semibold"><a href={listings_kpis[0].listing_url} target="_blank"> → View Listing</a></span>
 
@@ -7,6 +7,7 @@
 ```sql listings_kpis
     select 
         m.listing_id
+        , l.listing_name
         , l.listing_url
         , h.host_name
         , p.avg_rating as score_review
@@ -24,14 +25,14 @@
     left join
         airbnb_data.reviews r
         on m.listing_id = r.listing_id
-    inner join
+    left join
         airbnb_data.listings l
         on m.listing_id = l.listing_id
         and m.host_id = h.host_id
     where  
-        l.listing_name = '${params.listing}'
+        l.listing_id = '${params.listing}'::bigint
     group by 
-        1, 2, 3, 4
+        1, 2, 3, 4, 5
 ```
 
 <BigValue
@@ -42,15 +43,15 @@
 />
 <BigValue
     data={listings_kpis}
-    value=score_review
-    title="Score Review ★"
-    fmt=num2
-/>
-<BigValue
-    data={listings_kpis}
     value=num_reviews
     title="Reviews"
     fmt=num0
+/>
+<BigValue
+    data={listings_kpis}
+    value=score_review
+    title="Score Review ★"
+    fmt=num2
 />
 
 ``` sql listing_description 
@@ -59,7 +60,7 @@
     from 
         airbnb_data.listings
     where 
-        listing_name = '${params.listing}'
+        listing_id = '${params.listing}'::bigint
 ```
 
 ### Listing Description
@@ -80,7 +81,7 @@
     from
         airbnb_data.listings
     where 
-        listing_name = '${params.listing}'
+        listing_id = '${params.listing}'::bigint
 ```
 
 <DataTable data={listing_details} />
@@ -107,7 +108,7 @@
         on m.listing_id = l.listing_id
         and m.host_id = h.host_id
     where 
-        l.listing_name = '${params.listing}'
+        l.listing_id = '${params.listing}'::bigint
     group by 
         1, 2, 3, 4, 5, 6, 7
     order by 
@@ -124,6 +125,7 @@
     height=300
     title="Listing Location"
     link=listing_url
+    color=#a4b8fc
 />
 
 <LineChart
@@ -134,20 +136,21 @@
     markerShape=emptyCircle
     chartAreaHeight=300
     title="Booked Nights Over Time"
+    lineColor=#a4b8fc
 />
 
 </Grid>
 
 ```sql listing_review_scores
-   select listing_id, 'Accuracy' as category, review_scores_accuracy as score from airbnb_data.listings where listing_name = '${params.listing}'
+   select listing_id, 'Accuracy' as category, review_scores_accuracy as score from airbnb_data.listings where listing_id = '${params.listing}'::bigint
    union all 
-   select listing_id, 'Cleanliness' as category, review_scores_cleanliness as score from airbnb_data.listings where listing_name = '${params.listing}'
+   select listing_id, 'Cleanliness' as category, review_scores_cleanliness as score from airbnb_data.listings where listing_id = '${params.listing}'
    union all 
-   select listing_id, 'Checkin' as category, review_scores_checkin as score from airbnb_data.listings where listing_name = '${params.listing}'
+   select listing_id, 'Checkin' as category, review_scores_checkin as score from airbnb_data.listings where listing_id = '${params.listing}'
    union all 
-   select listing_id, 'Communication' as category, review_scores_communication as score from airbnb_data.listings where listing_name = '${params.listing}'
+   select listing_id, 'Communication' as category, review_scores_communication as score from airbnb_data.listings where listing_id = '${params.listing}'
    union all 
-   select listing_id, 'Location' as category, review_scores_location as score from airbnb_data.listings where listing_name = '${params.listing}'
+   select listing_id, 'Location' as category, review_scores_location as score from airbnb_data.listings where listing_id = '${params.listing}'
 ```
 
 <BarChart
@@ -159,6 +162,7 @@
     labels=true
     labelFmt=num1
     title="Reviews by Category"
+    fillColor=#a4b8fc
 />
 
 ``` sql listing_reviews
@@ -172,7 +176,7 @@
         airbnb_data.listings l
         on r.listing_id = l.listing_id
     where 
-        l.listing_name = '${params.listing}'
+        l.listing_id = '${params.listing}'
     order by 
         2 desc, 1, 3
 ```
@@ -182,23 +186,59 @@
     title="Listings Comments"
 />
 
-``` sql listings_host
+```sql listings_host 
     select 
-        h.host_name
-        , h.host_listings_count
-        , h.host_profile_url
+        h.host_id
+        , h.host_name
         , '/host/' || h.host_id as link
+        , case
+            when h.hosts_time_as_host_years = 0 then h.hosts_time_as_host_months 
+            else h.hosts_time_as_host_years 
+            end 
+        as hosts_time
+        , case 
+            when h.hosts_time_as_host_years = 0 then 'Months Hosting' 
+            else 'Years Hosting' 
+            end 
+        as hosts_time_label
+        , h.host_profile_url
+        , h.host_listings_count
+        , m.avg_rating as score_review
+        , count(distinct r.review_id) as num_reviews
     from 
         airbnb_data.hosts h
     inner join 
         airbnb_data.listings l
         on h.host_id = l.host_id
+    inner join 
+        airbnb_data.reviews r
+        on l.listing_id = r.listing_id
+    left join 
+        airbnb_data.listing_performance_metrics m
+        on h.host_id = m.host_id
+        and l.listing_id = m.listing_id
     where 
-        l.listing_name = '${params.listing}'
+        l.listing_id = '${params.listing}'
+    group by 
+        1, 2, 3, 4, 5, 6, 7, 8
 ```
 
 <DataTable data={listings_host} title="Host Details" subtitle="→ Click on the host name to explore its details, or view its profile on Airbnb." link=link>
     <Column id=host_name/>
     <Column id=host_listings_count title="Listings"/>
-    <Column id=host_profile_url contentType=link linkLabel="View Profile →" title="Profile URL" />
+    <Column id=num_reviews title="Reviews" />
+    <Column id=score_review title="Score" />
 </DataTable>
+
+<hr style="border: none; border-top: 1px solid #ffffff; width: 50%; margin: 10px auto;"/>
+
+## Get in Touch
+<p style="font-size: 0.85rem; color: #666;">
+Have questions, feedback, or just want to connect?
+</p>
+
+<hr style="border: none; border-top: 1px solid #ffffff; width: 50%; margin: 10px auto;"/>
+
+- Message me on [**LinkedIn**](www.linkedin.com/in/jacques-hervochon-27448898)
+- Reach me by [**Email**](mailto:jacqueshervochon@gmail.com)
+- Check out my work on [**GitHub**](https://github.com/yourprofile)

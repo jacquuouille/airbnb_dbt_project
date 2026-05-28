@@ -29,7 +29,7 @@
         on m.listing_id = l.listing_id
         and m.host_id = h.host_id
     where  
-        lower(replace(replace(replace(l.listing_name, ' ', '-'), '/', ''), '.', '')) = '${params.listing}'
+        l.listing_name = '${params.listing}'
     group by 
         1, 2, 3, 4
 ```
@@ -59,7 +59,7 @@
     from 
         airbnb_data.listings
     where 
-        lower(replace(replace(replace(listing_name, ' ', '-'), '/', ''), '.', '')) = '${params.listing}'
+        listing_name = '${params.listing}'
 ```
 
 ### Listing Description
@@ -80,7 +80,7 @@
     from
         airbnb_data.listings
     where 
-        lower(replace(replace(replace(listing_name, ' ', '-'), '/', ''), '.', '')) = '${params.listing}'
+        listing_name = '${params.listing}'
 ```
 
 <DataTable data={listing_details} />
@@ -107,7 +107,7 @@
         on m.listing_id = l.listing_id
         and m.host_id = h.host_id
     where 
-        lower(replace(replace(replace(l.listing_name, ' ', '-'), '/', ''), '.', '')) = '${params.listing}'
+        l.listing_name = '${params.listing}'
     group by 
         1, 2, 3, 4, 5, 6, 7
     order by 
@@ -139,15 +139,15 @@
 </Grid>
 
 ```sql listing_review_scores
-   select listing_id, 'Accuracy' as category, review_scores_accuracy as score from airbnb_data.listings where lower(replace(replace(replace(listing_name, ' ', '-'), '/', ''), '.', '')) = '${params.listing}'
+   select listing_id, 'Accuracy' as category, review_scores_accuracy as score from airbnb_data.listings where listing_name = '${params.listing}'
    union all 
-   select listing_id, 'Cleanliness' as category, review_scores_cleanliness as score from airbnb_data.listings where lower(replace(replace(replace(listing_name, ' ', '-'), '/', ''), '.', '')) = '${params.listing}'
+   select listing_id, 'Cleanliness' as category, review_scores_cleanliness as score from airbnb_data.listings where listing_name = '${params.listing}'
    union all 
-   select listing_id, 'Checkin' as category, review_scores_checkin as score from airbnb_data.listings where lower(replace(replace(replace(listing_name, ' ', '-'), '/', ''), '.', '')) = '${params.listing}'
+   select listing_id, 'Checkin' as category, review_scores_checkin as score from airbnb_data.listings where listing_name = '${params.listing}'
    union all 
-   select listing_id, 'Communication' as category, review_scores_communication as score from airbnb_data.listings where lower(replace(replace(replace(listing_name, ' ', '-'), '/', ''), '.', '')) = '${params.listing}'
+   select listing_id, 'Communication' as category, review_scores_communication as score from airbnb_data.listings where listing_name = '${params.listing}'
    union all 
-   select listing_id, 'Location' as category, review_scores_location as score from airbnb_data.listings where lower(replace(replace(replace(listing_name, ' ', '-'), '/', ''), '.', '')) = '${params.listing}'
+   select listing_id, 'Location' as category, review_scores_location as score from airbnb_data.listings where listing_name = '${params.listing}'
 ```
 
 <BarChart
@@ -172,7 +172,7 @@
         airbnb_data.listings l
         on r.listing_id = l.listing_id
     where 
-        lower(replace(replace(replace(l.listing_name, ' ', '-'), '/', ''), '.', '')) = '${params.listing}'
+        l.listing_name = '${params.listing}'
     order by 
         2 desc, 1, 3
 ```
@@ -194,7 +194,7 @@
         airbnb_data.listings l
         on h.host_id = l.host_id
     where 
-        lower(replace(replace(replace(l.listing_name, ' ', '-'), '/', ''), '.', '')) = '${params.listing}'
+        l.listing_name = '${params.listing}'
 ```
 
 <DataTable data={listings_host} title="Host Details" subtitle="→ Click on the host name to explore its details, or view its profile on Airbnb." link=link>

@@ -106,11 +106,7 @@
         , l.listing_property_type
         , l.listing_room_type
         , l.listing_url
-        , '/neighbourhood/' 
-|| lower(replace(l.listing_neighbourhood, ' ', '-')) 
-|| '/' 
-|| lower(replace(replace(replace(l.listing_name, ' ', '-'), '/', ''), '.', ''))
-as link
+        , '/neighbourhood/' || lower(l.listing_neighbourhood) || '/' || l.listing_name as link
         , m.avg_rating as score_review
         , count(distinct r.review_id) as num_reviews
     from 

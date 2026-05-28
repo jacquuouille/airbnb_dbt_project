@@ -25,15 +25,50 @@
         1
 ```
 
+``` sql score
+    with score_reviews_all_neighbourhood as (
+        select 
+            round(avg(avg_rating), 1) as avg_rating_all_neighbourhoods
+        from 
+            airbnb_data.listing_performance_metrics
+    )
+
+    select 
+        b.avg_rating_all_neighbourhoods
+        , avg(m.avg_rating) as score_review
+        , round(avg(m.avg_rating) - (b.avg_rating_all_neighbourhoods), 1) as diff
+    from
+        airbnb_data.listing_performance_metrics m
+    inner join 
+        airbnb_data.listings l
+        on m.listing_id = l.listing_id
+    cross join
+        score_reviews_all_neighbourhood b
+    where 
+        lower(replace(l.listing_neighbourhood, ' ', '-')) = '${params.neighbourhood}'
+    group by 
+        1
+```
+
 <BigValue
     data={occupancy}
     value=occupancy_rate
     title="Occupancy"
     comparison=diff
     comparisonFmt=num1
-    comparisonTitle="pp vs. City Average"
-    <Info description="pp: percentage points"
+    comparisonTitle="perc. points vs. City Average"
+    <Info description="perc. points: percentage points"
     fmt=pct1
+/>
+<BigValue
+    data={score}
+    value=score_review
+    title="Score Review ★ (avg.)"
+    <Info description="Out of 5"
+    comparison=diff
+    comparisonFmt=num1
+    comparisonTitle="points vs. City Average"
+    fmt=num1
 />
 
 ``` sql monthly_occupancy
@@ -85,8 +120,7 @@
     select 
         distinct l.listing_name
         , l.listing_url
-        , '/neighbourhood/' || lower(replace(l.listing_neighbourhood, ' ', '-')) 
-    || '/' || l.listing_name as link
+        , '/neighbourhood/' || lower(l.listing_neighbourhood) || '/' || l.listing_name as link
         , m.pct_occupancy / 100 as occupancy_rate_pct
     from 
         airbnb_data.listing_monthly_metrics m

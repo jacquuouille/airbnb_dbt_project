@@ -88,12 +88,25 @@ Explore Vancouver's Airbnb hosts by neighbourhood. Use the filter below to selec
     group by
         1, 2, 3
     order by 
-        2 desc
+        2 desc, 3 desc, 1
 ```
 
 <DataTable data={hosts_details} title="Hosts" subtitle="→ Click on a listing name to explore its details" search=true link=link rows=20>
     <Column id=host_name/> 
-    <Column id=host_listings_count title="Listings" contentType=bar barColor=#ffe08a />
+    <Column id=host_listings_count title="Listings"/>
     <Column id=num_reviews title="Reviews" fmt=num0 contentType=bar barColor=#ffe08a backgroundColor=#ebebeb/>
-    <Column id=score title="Score" fmt=num1 contentType=colorscale/>
+    <Column id=score title="Score" fmt=num1 contentType=colorscale colorScale={['#e6ecff', '#a4b8fc']}/>
 </DataTable> 
+
+<hr style="border: none; border-top: 1px solid #ffffff; width: 50%; margin: 10px auto;"/>
+
+## Get in Touch
+<p style="font-size: 0.85rem; color: #666;">
+Have questions, feedback, or just want to connect?
+</p>
+
+<hr style="border: none; border-top: 1px solid #ffffff; width: 50%; margin: 10px auto;"/>
+
+- Message me on [**LinkedIn**](www.linkedin.com/in/jacques-hervochon-27448898)
+- Reach me by [**Email**](mailto:jacqueshervochon@gmail.com)
+- Check out my work on [**GitHub**](https://github.com/yourprofile)

@@ -47,8 +47,10 @@ Explore and export Vancouver's Airbnb listings by neighbourhood. Use the filter 
         , l.listing_property_type
         , l.listing_room_type
         , l.listing_url
-        , '/neighbourhood/' || lower(replace(l.listing_neighbourhood, ' ', '-')) 
-    || '/' || l.listing_name as link
+        , '/neighbourhood/' 
+        || lower(replace(l.listing_neighbourhood, ' ', '-')) 
+        || '/' 
+        || l.listing_id::bigint as link
         , m.avg_rating as score_review
         , count(distinct r.review_id) as num_reviews
     from 
@@ -73,8 +75,21 @@ Explore and export Vancouver's Airbnb listings by neighbourhood. Use the filter 
 
 <DataTable data={listings_details} title="Listings" subtitle="→ Click on a listing name to explore its details" search=true link=link rows=20>
     <Column id=listing_name/>
-    <Column id=listing_room_type/>
-    <Column id=num_reviews contentType=bar backgroundColor=#ebebeb title="Reviews" fmt=num0/>
-    <Column id=score_review title="Score" contentType=colorscale fmt=num1/>
+    <Column id=listing_room_type title="Room Type"/>
+    <Column id=num_reviews contentType=bar barColor=#a4b8fc backgroundColor=#ebebeb title="Reviews" fmt=num0 />
+    <Column id=score_review title="Score" contentType=colorscale colorScale={['#e6ecff', '#a4b8fc']} fmt=num1/>
     
 </DataTable> 
+
+<hr style="border: none; border-top: 1px solid #ffffff; width: 50%; margin: 10px auto;"/>
+
+## Get in Touch
+<p style="font-size: 0.85rem; color: #666;">
+Have questions, feedback, or just want to connect?
+</p>
+
+<hr style="border: none; border-top: 1px solid #ffffff; width: 50%; margin: 10px auto;"/>
+
+- Message me on [**LinkedIn**](www.linkedin.com/in/jacques-hervochon-27448898)
+- Reach me by [**Email**](mailto:jacqueshervochon@gmail.com)
+- Check out my work on [**GitHub**](https://github.com/yourprofile)

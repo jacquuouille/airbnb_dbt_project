@@ -106,6 +106,18 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
     yMax=0.8
     title="Occupancy Over Time"
     chartAreaHeight=250
+    fillColor=#a4b8fc
+    lineColor=#00000
+    seriesOptions={{
+        symbol: 'circle', 
+        symbolSize: 8, 
+        showSymbol: true, 
+        itemStyle: {
+            color: '#ffffff', 
+            borderColor: '#000000', 
+            borderWidth: 1
+        }
+    }}
 />
 
 #### Occupancy Breakdown (top 10)
@@ -200,10 +212,18 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
     yFmt=pct1
     chartAreaHeight=210
     title="Listing Score Distribution"
+    labels=true
+    labelFmt=pct0
+    fillColor=#a4b8fc
     echartsOptions={{
         xAxis: {
             min: 4.0,
             max: 5.0
+        },
+        yAxis: {
+            min: 0,
+            max: 0.4,
+            interval: 0.1
         },
         series: [{
             barWidth: '70%'
@@ -271,8 +291,10 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
     sizeFmt=num0
     value=listings
     pointName=listing_neighbourhood
-    height=350
+    height=389
     maxSize=50
+    colorPalette={['#e6ecff', '#4e75f7']}
+    borderColor=#a4b8fc
     tooltip={[
         {id: 'listing_neighbourhood', fmt:'id', showColumnName:false, valueClass: 'text-lg font-semibold'},
         {id: 'listings', fmt: 'num0', fieldClass: 'text-[grey]', valueClass: 'text-[black]'},
@@ -311,6 +333,7 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
 <Grid cols=2>
     <ECharts config={
     {
+        color: ['#4e75f7', '#a4b8fc', '#e6ecff', '#a0b4f7'],
         title: {
             text: 'Listings by Room Type',
             left: 'left'
@@ -330,8 +353,8 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
 />
 
 <DataTable data={listing_by_room_property} title="Listings by Property Type">
-    <Column id=listing_property_type />
-    <Column id=num_listings title="Listings" contentType=bar barColor=#aecfaf/> 
+    <Column id=listing_property_type title="Property Type"/>
+    <Column id=num_listings title="Listings" contentType=bar barColor=#a4b8fc backgroundColor=#ebebeb/> 
 </DataTable>
 
 </Grid>

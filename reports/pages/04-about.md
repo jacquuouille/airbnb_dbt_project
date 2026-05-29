@@ -3,7 +3,7 @@ title: (𝒊) About
 navOrder: 4
 --- 
 
-This dashboard is an **interactive exploration tool** built to analyze Vancouver's short-term rental market using data from [InsideAirbnb.com](https://insideairbnb.com). 
+This dashboard is an **interactive exploration tool** built to analyze Vancouver's short-term rental market using data from [InsideAirbnb.com](https://insideairbnb.com).
 
 Rather than static reports, it is designed to let you **navigate the data your way**, drilling down from city-wide trends to individual listings and hosts through clicks and filters.
 

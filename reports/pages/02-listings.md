@@ -53,6 +53,7 @@ Explore and export Vancouver's Airbnb listings by neighbourhood. Use the filter 
         || l.listing_id::bigint as link
         , m.avg_rating as score_review
         , count(distinct r.review_id) as num_reviews
+        , avg(p.pct_occupancy) as occupancy
     from 
         airbnb_data.listings l
     inner join 
@@ -62,6 +63,10 @@ Explore and export Vancouver's Airbnb listings by neighbourhood. Use the filter 
         airbnb_data.listing_performance_metrics m
         on h.host_id = m.host_id
         and l.listing_id = m.listing_id
+    left join 
+        airbnb_data.listing_monthly_metrics p
+        on h.host_id = p.host_id
+        and l.listing_id = p.listing_id
     left join 
         airbnb_data.reviews r
         on l.listing_id = r.listing_id
@@ -75,9 +80,9 @@ Explore and export Vancouver's Airbnb listings by neighbourhood. Use the filter 
 
 <DataTable data={listings_details} title="Listings" subtitle="→ Click on a listing name to explore its details" search=true link=link rows=20>
     <Column id=listing_name/>
-    <Column id=listing_room_type title="Room Type"/>
-    <Column id=num_reviews contentType=bar barColor=#a4b8fc backgroundColor=#ebebeb title="Reviews" fmt=num0 />
     <Column id=score_review title="Score" contentType=colorscale colorScale={['#e6ecff', '#a4b8fc']} fmt=num1/>
+    <Column id=num_reviews contentType=bar barColor=#a4b8fc backgroundColor=#ebebeb title="Reviews" fmt=num0 />
+    <Column id=occupancy contentType=colorscale colorScale={['#e6ecff', '#a4b8fc']} fmt=num1/>
     
 </DataTable> 
 

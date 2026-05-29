@@ -372,6 +372,7 @@ Have questions, feedback, or just want to connect?
 </p>
 
 <hr style="border: none; border-top: 1px solid #ffffff; width: 50%; margin: 10px auto;"/>
+<hr style="border: none; border-top: 1px solid #ffffff; width: 50%; margin: 10px auto;"/>
 
 - Message me on [**LinkedIn**](www.linkedin.com/in/jacques-hervochon-27448898)
 - Reach me by [**Email**](mailto:jacqueshervochon@gmail.com)

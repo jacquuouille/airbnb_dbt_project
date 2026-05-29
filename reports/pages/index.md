@@ -347,6 +347,12 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
                 type: 'pie',
                 radius: ['73%', '65%'],
                 data: [...listings_by_room],
+                emphasis: {
+                    itemStyle: {
+                        color: 'inherit',
+                        brightness: 0
+                    }
+                }
             }
         ]
     }

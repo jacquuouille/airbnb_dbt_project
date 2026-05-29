@@ -1,4 +1,4 @@
-# {params.neighbourhood.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
+# {params.neighbourhood.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())} 
 
 ``` sql occupancy
     with bookings_all_neighbourhoods as (

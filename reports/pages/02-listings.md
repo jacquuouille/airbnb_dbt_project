@@ -37,7 +37,7 @@ Explore and export Vancouver's Airbnb listings by neighbourhood. Use the filter 
 <BigValue
     data={listing_kpis}
     value=num_listings
-    title="All Listings"
+    title="Active Listings"
     fmt=num0
 />
 

@@ -4,6 +4,10 @@
 
 <hr style="border: none; border-top: 1px solid #ffffff; width: 50%; margin: 10px auto;"/>
 
+<Alert status="warning">
+    ⚠️ Data shown may be incomplete: some listings are unavailable due to limitations in the source data provided.
+</Alert>
+
 ```sql host_details_kpis 
     select 
         h.host_id
@@ -24,10 +28,10 @@
         , count(distinct r.review_id) as num_reviews
     from 
         airbnb_data.hosts h
-    inner join 
+    left join 
         airbnb_data.listings l
         on h.host_id = l.host_id
-    inner join 
+    left join 
         airbnb_data.reviews r
         on l.listing_id = r.listing_id
     left join 

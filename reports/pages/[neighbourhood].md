@@ -124,7 +124,7 @@
         || lower(replace(l.listing_neighbourhood, ' ', '-')) 
         || '/' 
         || l.listing_id::bigint as link
-        , m.pct_occupancy / 100 as occupancy_rate_pct
+        , avg(m.pct_occupancy) / 100 as occupancy_rate_pct
     from 
         airbnb_data.listing_monthly_metrics m
     inner join
@@ -132,6 +132,8 @@
         on m.listing_id = l.listing_id
     where 
         lower(replace(l.listing_neighbourhood, ' ', '-')) = '${params.neighbourhood}'
+    group by 
+        1, 2, 3
     order by 
         4 desc
 ```

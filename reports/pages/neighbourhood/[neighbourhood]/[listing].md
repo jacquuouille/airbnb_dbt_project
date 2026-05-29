@@ -4,6 +4,10 @@
 
 <hr style="border: none; border-top: 1px solid #ffffff; width: 50%; margin: 10px auto;"/>
 
+<Alert status="warning">
+    ⚠️ Reviews may have been written before our analysis period starts.
+</Alert>
+
 ```sql listings_kpis
     select 
         l.listing_id
@@ -154,9 +158,7 @@
 ```
 
 <Alert status="info">
-    - Charts below may appear blank for listings with no reviews.
-    <br/>
-    - Reviews below may have been written before our analysis period starts.
+    ℹ️ Charts below may appear blank for listings with no reviews.
 </Alert>
 
 <BarChart

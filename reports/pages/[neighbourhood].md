@@ -50,6 +50,26 @@
         1
 ```
 
+``` sql listing_with_100_occupancy
+    with 
+    occupancy_rate as ( 
+        select 
+            listing_id
+            , avg(pct_occupancy) as occupancy
+        from 
+            airbnb_data.listing_monthly_metrics
+        where 
+        lower(replace(listing_neighbourhood, ' ', '-')) = '${params.neighbourhood}'
+        group by 
+            1
+    )
+
+    select 
+        count(distinct case when occupancy = 100 then listing_id end) / count(distinct listing_id) as share_listing_100_occ
+    from 
+        occupancy_rate
+```
+
 <BigValue
     data={occupancy}
     value=occupancy_rate
@@ -70,12 +90,18 @@
     comparisonTitle="points vs. City Average"
     fmt=num1
 />
+<BigValue
+    data={listing_with_100_occupancy}
+    value=share_listing_100_occ
+    title="Share of Fully Booked Listings"
+    fmt=pct1
+/>
 
 ``` sql monthly_occupancy
     with bookings_all_neighbourhoods as (
         select 
             month_date
-            , avg(pct_occupancy) / 100 as monthly_occupancy_rate_pct_all_neighbourhoods
+            , avg(pct_occupancy) / 100 as occupancy_all_neighbourhoods
         from 
             airbnb_data.listing_monthly_metrics
         group by 
@@ -84,8 +110,8 @@
 
     select 
         distinct m.month_date
-        , b.monthly_occupancy_rate_pct_all_neighbourhoods
-        , avg(m.pct_occupancy) / 100 as monthly_occupancy_rate_pct
+        , b.occupancy_all_neighbourhoods
+        , avg(m.pct_occupancy) / 100 as occupancy
     from
         airbnb_data.listing_monthly_metrics m
     inner join 
@@ -103,7 +129,7 @@
 <LineChart
     data={monthly_occupancy}
     x=month_date
-    y={['monthly_occupancy_rate_pct', 'monthly_occupancy_rate_pct_all_neighbourhoods']}
+    y={['occupancy', 'occupancy_all_neighbourhoods']}
     chartAreaHeight=300
     title="Occupancy Over Time vs. Vancouver Average"
     markers=true
@@ -124,22 +150,27 @@
         || lower(replace(l.listing_neighbourhood, ' ', '-')) 
         || '/' 
         || l.listing_id::bigint as link
+        , r.avg_rating
         , avg(m.pct_occupancy) / 100 as occupancy_rate_pct
     from 
         airbnb_data.listing_monthly_metrics m
     inner join
         airbnb_data.listings l
         on m.listing_id = l.listing_id
+    left join
+        airbnb_data.listing_performance_metrics r
+        on l.listing_id = r.listing_id
     where 
         lower(replace(l.listing_neighbourhood, ' ', '-')) = '${params.neighbourhood}'
     group by 
-        1, 2, 3
+        1, 2, 3, 4
     order by 
-        4 desc
+        5 desc
 ```
 
 <DataTable data={top_listing_num_nights_booked} search=true title="Top Listings by Occupancy" subtitle="→ Click on a listing name to explore its details" link=link>
     <Column id=listing_name/>
+    <Column id=avg_rating fmt=num1 title="Score"/>
     <Column id=occupancy_rate_pct title="Occupancy" contentType=colorscale colorScale={['#e6ecff', '#a4b8fc']}/>
 </DataTable> 
 

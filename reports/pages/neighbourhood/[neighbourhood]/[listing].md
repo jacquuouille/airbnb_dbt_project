@@ -153,6 +153,12 @@
    select listing_id, 'Location' as category, review_scores_location as score from airbnb_data.listings where listing_id = '${params.listing}'
 ```
 
+<Alert status="info">
+    - Charts below may appear blank for listings with no reviews.
+    <br/>
+    - Reviews below may have been written before our analysis period starts.
+</Alert>
+
 <BarChart
     data={listing_review_scores}
     x=category

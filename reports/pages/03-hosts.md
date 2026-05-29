@@ -94,7 +94,7 @@ Explore Vancouver's Airbnb hosts by neighbourhood. Use the filter below to selec
 <DataTable data={hosts_details} title="Hosts" subtitle="→ Click on a listing name to explore its details" search=true link=link rows=20>
     <Column id=host_name/> 
     <Column id=host_listings_count title="Listings"/>
-    <Column id=num_reviews title="Reviews" fmt=num0 contentType=bar barColor=#ffe08a backgroundColor=#ebebeb/>
+    <Column id=num_reviews title="Reviews" fmt=num0 contentType=bar barColor=#a4b8fc backgroundColor=#ebebeb/>
     <Column id=score title="Score" fmt=num1 contentType=colorscale colorScale={['#e6ecff', '#a4b8fc']}/>
 </DataTable> 
 

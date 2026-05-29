@@ -84,7 +84,7 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
 ``` sql monthly_occupancy
     select 
         month_date
-        , avg(m.pct_occupancy) / 100 as occupancy_rate_pct
+        , avg(m.pct_occupancy) / 100 as occupancy
     from 
         airbnb_data.listing_monthly_metrics m
     inner join 
@@ -101,7 +101,8 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
 <AreaChart
     data={monthly_occupancy}
     x=month_date
-    y=occupancy_rate_pct
+    y=occupancy
+    yFmt=pct1
     yMin=0
     yMax=0.8
     title="Occupancy Over Time"
@@ -184,7 +185,7 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
 ``` sql score_distribution
     select 
         distinct score
-        , sum(num_listings) over(partition by score) / sum(num_listings) over() as num_listing_prop
+        , sum(num_listings) over(partition by score) / sum(num_listings) over() as share_of_listings
     from ( 
         select 
             round(m.avg_rating, 1) as score
@@ -207,7 +208,7 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
 <BarChart
     data={score_distribution}
     x=score
-    y=num_listing_prop
+    y=share_of_listings
     xFmt=num1
     yFmt=pct1
     chartAreaHeight=210
@@ -293,7 +294,7 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
     pointName=listing_neighbourhood
     height=389
     maxSize=50
-    colorPalette={['#e6ecff', '#4e75f7']}
+    colorPalette={['#d7dff7', '#a4b8fc']}
     borderColor=#a4b8fc
     tooltip={[
         {id: 'listing_neighbourhood', fmt:'id', showColumnName:false, valueClass: 'text-lg font-semibold'},
@@ -333,7 +334,7 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
 <Grid cols=2>
     <ECharts config={
     {
-        color: ['#4e75f7', '#a4b8fc', '#e6ecff', '#a0b4f7'],
+        color: ['#a4b8fc', '#e6ecff'],
         title: {
             text: 'Listings by Room Type',
             left: 'left'

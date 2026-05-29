@@ -6,19 +6,18 @@
 
 ```sql listings_kpis
     select 
-        m.listing_id
+        l.listing_id
         , l.listing_name
         , l.listing_url
         , h.host_name
         , p.avg_rating as score_review
-        , avg(m.pct_occupancy) / 100 as occupancy_rate_pct
+        , coalesce(avg(m.pct_occupancy) / 100, 0) as occupancy_rate_pct
         , count(distinct review_id) as num_reviews
     from 
         airbnb_data.listing_monthly_metrics m
-    inner join 
+    left join 
         airbnb_data.listing_performance_metrics p
-        on m.listing_id = p.listing_id 
-        and m.host_id = p.host_id
+        on m.listing_id = p.listing_id
     left join
         airbnb_data.hosts h
         on m.host_id = h.host_id
@@ -56,7 +55,8 @@
 
 ``` sql listing_description 
     select 
-        regexp_replace(listing_description, '<[^>]+>', ' ', 'g') as listing_description
+        listing_id
+        , regexp_replace(listing_description, '<[^>]+>', ' ', 'g') as listing_description
     from 
         airbnb_data.listings
     where 
@@ -103,7 +103,7 @@
     left join 
         airbnb_data.hosts h
         on m.host_id = h.host_id
-    inner join
+    left join
         airbnb_data.listings l
         on m.listing_id = l.listing_id
         and m.host_id = h.host_id
@@ -168,12 +168,12 @@
 ``` sql listing_reviews
     select 
         distinct r.reviewer_name
-        , r.review_date
+        , case when r.review_date is null then null else r.review_date end as review_date
         , r.review_comments
     from 
+        airbnb_data.listings l 
+    left join
         airbnb_data.reviews r
-    inner join
-        airbnb_data.listings l
         on r.listing_id = l.listing_id
     where 
         l.listing_id = '${params.listing}'
@@ -203,31 +203,18 @@
         as hosts_time_label
         , h.host_profile_url
         , h.host_listings_count
-        , m.avg_rating as score_review
-        , count(distinct r.review_id) as num_reviews
     from 
         airbnb_data.hosts h
-    inner join 
+    left join 
         airbnb_data.listings l
         on h.host_id = l.host_id
-    inner join 
-        airbnb_data.reviews r
-        on l.listing_id = r.listing_id
-    left join 
-        airbnb_data.listing_performance_metrics m
-        on h.host_id = m.host_id
-        and l.listing_id = m.listing_id
     where 
         l.listing_id = '${params.listing}'
-    group by 
-        1, 2, 3, 4, 5, 6, 7, 8
 ```
 
 <DataTable data={listings_host} title="Host Details" subtitle="→ Click on the host name to explore its details, or view its profile on Airbnb." link=link>
     <Column id=host_name/>
     <Column id=host_listings_count title="Listings"/>
-    <Column id=num_reviews title="Reviews" />
-    <Column id=score_review title="Score" />
 </DataTable>
 
 <hr style="border: none; border-top: 1px solid #ffffff; width: 50%; margin: 10px auto;"/>

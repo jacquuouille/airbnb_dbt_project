@@ -130,6 +130,7 @@
     data={monthly_occupancy}
     x=month_date
     y={['occupancy', 'occupancy_all_neighbourhoods']}
+    yFmt=pct1
     chartAreaHeight=300
     title="Occupancy Over Time vs. Vancouver Average"
     markers=true

@@ -139,7 +139,7 @@ What's measured:
 
 In the meantime, while the application is being deployed, feel free to explore the dashboard through the video below.
 
-### 🛠️ 7. Future Improvements
+### ↗️ 7. Future Improvements
 
 - Schedule dbt models for automated runs
 - Automate data ingestion from Inside Airbnb (e.g., with Airflow)

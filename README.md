@@ -87,32 +87,22 @@ tests:
 
 ### ⚙️ 4. Continous Integration
 
-To ensure data quality and prevent broken transformations from being merged, the project includes a GitHub Actions CI pipeline that automatically validates dbt changes on every pull request and push to the main branch.
+To ensure data quality and prevent broken transformations from being merged, the project includes a **GitHub Actions CI pipeline** that automatically validates dbt changes on every pull request and push to the main branch.
 
-The workflow performs the following steps:
-- Checks out the repository code.
-- Sets up a Python environment.
-- Installs dbt and the BigQuery adapter.
-- Authenticates securely to BigQuery using a GitHub Secret containing a service account key.
-- Generates the dbt profile used during execution.
-- Installs project dependencies (dbt deps).
-- Validates the connection to BigQuery (dbt debug).
-- Executes dbt build
-
-This creates an automated quality gate that ensures:
-- SQL models compile successfully.
+The workflow creates an automated quality gate that ensures:
 - BigQuery credentials and connectivity are valid.
+- SQL models compile successfully.
 - Data quality tests pass.
 - Changes do not introduce breaking transformations.
 
 If any model or test fails, the GitHub Action fails and the pull request is flagged before being merged.
 
-### ⚙️ 5. Building the BI tool with Evidence
+### 📈 5. Building the BI tool with Evidence
 > Evidence is an open source framework for building data products with SQL - things like reports, decision-support tools, and embedded dashboards. It's a code-driven alternative to drag-and-drop BI tools.
 
-I chose Evidence because it combines the flexibility of a code-first analytics platform with the usability of a modern, intuitive user interface.
-- On the backend, Evidence integrates seamlessly with my dbt project and BigQuery environment. Updates can be implemented and deployed quickly while remaining aligned with the underlying data models.
-- On the frontend, Evidence offers a clean and engaging user experience that goes beyond traditional drag-and-drop dashboards. This approach makes insights more accessible, encourages exploration, and helps foster a stronger data-driven culture among users.
+I chose Evidence because it **combines the flexibility of a code-first analytics platform with the usability of a modern, intuitive user interface**.
+- On the backend, Evidence integrates with my dbt project and BigQuery environment. **Updates can be implemented and deployed quickly while remaining aligned with the underlying data models**.
+- On the frontend, Evidence **offers a clean and engaging user experience that goes beyond traditional drag-and-drop dashboards**. This approach makes insights more accessible, encourages exploration, and helps foster a stronger data-driven culture among users.
 
 ### 📊 6. Dashboard
 This dashboard is an **interactive exploration tool** built to analyze Vancouver's short-term rental market using data from [InsideAirbnb.com](https://insideairbnb.com).
@@ -121,22 +111,12 @@ Rather than static reports, it is designed to let you **navigate the data your w
 
 The dashboard is structured as a **drilldown experience** across four levels:
 
-- **Overview:** key metrics across all neighbourhoods (occupancy trends, listing distribution, review scores, and property types). 
-<hr style="border: none; border-top: 0.5px solid #ffffff; width: 90%; margin: 1px auto;"/>
-→ Use the breakdown tables to filter charts by neighbourhood, property type, room type or listing name.
-- **Neighbourhood:** explore occupancy over time across all neighbourhood, top listings, and how it compares to the Vancouver average.
-<hr style="border: none; border-top: 0.5px solid #ffffff; width: 90%; margin: 1px auto;"/>
-→ Click any bubble on the map to dive into a specific neighbourhood. 
-- **Listing:** explore individual profile (occupancy, booked nights over time, location, review scores by category, and host details).
-<hr style="border: none; border-top: 0.5px solid #ffffff; width: 90%; margin: 1px auto;"/>
-→ Click any listing name in the neighbourhood page to deep dive. 
-- **Host:** Check full profile (number of listings, time hosting, ratings, and reviews).
-<hr style="border: none; border-top: 0.5px solid #ffffff; width: 90%; margin: 1px auto;"/>
-→ Click on a host from the listing page
+- **Overview:** key metrics across all neighbourhoods (occupancy trends, listing distribution, review scores, and property types).  
+- **Neighbourhood:** explore occupancy over time across all neighbourhood, top listings, and how it compares to the Vancouver average.  
+- **Listing:** explore individual profile (occupancy, booked nights over time, location, review scores by category, and host details). o;"/>
+- **Host:** Check full profile (number of listings, time hosting, ratings, and reviews). 
 
-#### What's Measured
-
-The key metrics tracked across the dashboard are:
+What's measured:
 
 - **Occupancy Rate:** share of available nights that are booked
 - **Booked Nights:** total nights booked over time
@@ -144,15 +124,12 @@ The key metrics tracked across the dashboard are:
 - **Host Profile:** experience, portfolio size and guest ratings
 
 ### 🛠️ 7. Technology Stack
-- PostgreSQL, Power BI, DAX, Python, GitHub.
+- dbt, SQL, GitHub, Evidence, VS Code
 
-### ℹ️ 8. Data Source
-[Maeven Analytics](https://mavenanalytics.io/data-playground/cafe-rewards-offers)
-
-### 👨‍💻 9. Author
+### 👨‍💻 8. Author
 **Jacques Hervochon** 🟦 [LinkedIn](https://www.linkedin.com/in/jacques-hervochon-27448898) |
 🔗 [Portfolio](https://jacqueshervochon.carrd.co/#) |
 📆 [Book a call](https://calendly.com/jacqueshervochon/30min)
 
-### 📄 10. License 
+### 📄 9. License 
 This project is licensed under the MIT License.

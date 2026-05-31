@@ -97,12 +97,25 @@ The workflow creates an automated quality gate that ensures:
 
 If any model or test fails, the GitHub Action fails and the pull request is flagged before being merged.
 
+<table>
+  <tr>
+    <td width="50%">
+      <img src="screenshots/ci_1.png" width="100%" />
+    </td>
+    <td width="50%">
+      <img src="screenshots/ci_2.png" width="100%" />
+    </td>
+  </tr>
+</table>
+
 ### 📈 5. Building the BI tool with Evidence
 > Evidence is an open source framework for building data products with SQL - things like reports, decision-support tools, and embedded dashboards. It's a code-driven alternative to drag-and-drop BI tools.
 
 I chose Evidence because it **combines the flexibility of a code-first analytics platform with the usability of a modern, intuitive user interface**.
 - On the backend, Evidence integrates with my dbt project and BigQuery environment. **Updates can be implemented and deployed quickly while remaining aligned with the underlying data models**.
 - On the frontend, Evidence **offers a clean and engaging user experience that goes beyond traditional drag-and-drop dashboards**. This approach makes insights more accessible, encourages exploration, and helps foster a stronger data-driven culture among users.
+
+![Dashboard](screenshots/dashboard_overview.png)
 
 ### 📊 6. Dashboard
 This dashboard is an **interactive exploration tool** built to analyze Vancouver's short-term rental market using data from [InsideAirbnb.com](https://insideairbnb.com).

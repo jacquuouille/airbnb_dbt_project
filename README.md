@@ -2,7 +2,7 @@
 
 This project aims to build an **end-to-end analytics pipeline**, from data transformation to data visualisation. Data is sourced from [Inside Airbnb](https://insideairbnb.com/get-the-data/)
 
-### 1. Project Overview
+### ✅ 1. Project Overview
 
 The project implements a modern data pipeline using BigQuery, dbt and Evidence:
 - Load raw data into **BigQuery**
@@ -11,7 +11,7 @@ The project implements a modern data pipeline using BigQuery, dbt and Evidence:
 
 ![Schema](screenshots/schema.png)
 
-### 2. Project Structure
+### 📂 2. Project Structure
 
 ```
 my_project/
@@ -41,7 +41,7 @@ dbt docs generate
 dbt docs serve
 ```
 
-### 3. Dbt Testing
+### ☑️ 3. Dbt Testing
 
 - 3.1. Generic tests: to **validate business rules**
 
@@ -85,7 +85,7 @@ tests:
             combination_of_columns: ['month_date', 'host_id', 'listing_id']
 ```
 
-### 4. Continous Integration
+### ⚙️ 4. Continous Integration
 
 To ensure data quality and prevent broken transformations from being merged, the project includes a GitHub Actions CI pipeline that automatically validates dbt changes on every pull request and push to the main branch.
 
@@ -106,3 +106,25 @@ This creates an automated quality gate that ensures:
 - Changes do not introduce breaking transformations.
 
 If any model or test fails, the GitHub Action fails and the pull request is flagged before being merged.
+
+### ⚙️ 5. Building the BI tool with Evidence
+>> Evidence is an open source framework for building data products with SQL - things like reports, decision-support tools, and embedded dashboards. It's a code-driven alternative to drag-and-drop BI tools.
+
+I chose Evidence because it combines the flexibility of a code-first analytics platform with the usability of a modern, intuitive user interface.
+- On the backend, Evidence integrates seamlessly with my dbt project and BigQuery environment. Updates can be implemented and deployed quickly while remaining aligned with the underlying data models.
+- On the frontend, Evidence offers a clean and engaging user experience that goes beyond traditional drag-and-drop dashboards. This approach makes insights more accessible, encourages exploration, and helps foster a stronger data-driven culture among users.
+
+
+### 🛠️ 6. Technology Stack
+- PostgreSQL, Power BI, DAX, Python, GitHub.
+
+### ℹ️ 7. Data Source
+[Maeven Analytics](https://mavenanalytics.io/data-playground/cafe-rewards-offers)
+
+### 👨‍💻 8. Author
+**Jacques Hervochon** 🟦 [LinkedIn](https://www.linkedin.com/in/jacques-hervochon-27448898) |
+🔗 [Portfolio](https://jacqueshervochon.carrd.co/#) |
+📆 [Book a call](https://calendly.com/jacqueshervochon/30min)
+
+### 📄 9. License 
+This project is licensed under the MIT License.

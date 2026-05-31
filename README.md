@@ -117,6 +117,8 @@ I chose Evidence because it **combines the flexibility of a code-first analytics
 
 ![Dashboard](screenshots/dashboard_overview.png)
 
+In the meantime, while the application is being deployed, feel free to explore the dashboard through the video below.
+
 ### 📊 6. Dashboard
 This dashboard is an **interactive exploration tool** built to analyze Vancouver's short-term rental market using data from [InsideAirbnb.com](https://insideairbnb.com).
 
@@ -124,10 +126,10 @@ Rather than static reports, it is designed to let you **navigate the data your w
 
 The dashboard is structured as a **drilldown experience** across four levels:
 
-- **Overview:** key metrics across all neighbourhoods (occupancy trends, listing distribution, review scores, and property types).  
-- **Neighbourhood:** explore occupancy over time across all neighbourhood, top listings, and how it compares to the Vancouver average.  
-- **Listing:** explore individual profile (occupancy, booked nights over time, location, review scores by category, and host details). o;"/>
-- **Host:** Check full profile (number of listings, time hosting, ratings, and reviews). 
+- **Overview:** key metrics across all neighbourhoods (occupancy trends, listing distribution, review scores, and property types) 
+- **Neighbourhood:** explore occupancy over time across all neighbourhood, top listings, and how it compares to the Vancouver average 
+- **Listing:** explore individual profile (occupancy, booked nights over time, location, review scores by category, and host details)
+- **Host:** Check full profile (number of listings, time hosting, ratings, and reviews)
 
 What's measured:
 
@@ -140,7 +142,8 @@ What's measured:
 - dbt, SQL, GitHub, Evidence, VS Code
 
 ### 👨‍💻 8. Author
-**Jacques Hervochon** 🟦 [LinkedIn](https://www.linkedin.com/in/jacques-hervochon-27448898) |
+**Jacques Hervochon** 
+🟦 [LinkedIn](https://www.linkedin.com/in/jacques-hervochon-27448898) |
 🔗 [Portfolio](https://jacqueshervochon.carrd.co/#) |
 📆 [Book a call](https://calendly.com/jacqueshervochon/30min)
 

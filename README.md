@@ -115,9 +115,6 @@ I chose Evidence because it **combines the flexibility of a code-first analytics
 - On the backend, Evidence integrates with my dbt project and BigQuery environment. **Updates can be implemented and deployed quickly while remaining aligned with the underlying data models**.
 - On the frontend, Evidence **offers a clean and engaging user experience that goes beyond traditional drag-and-drop dashboards**. This approach makes insights more accessible, encourages exploration, and helps foster a stronger data-driven culture among users.
 
-![Dashboard](screenshots/dashboard_overview.png)
-
-In the meantime, while the application is being deployed, feel free to explore the dashboard through the video below.
 
 ### 📊 6. Dashboard
 This dashboard is an **interactive exploration tool** built to analyze Vancouver's short-term rental market using data from [InsideAirbnb.com](https://insideairbnb.com).
@@ -137,6 +134,10 @@ What's measured:
 - **Booked Nights:** total nights booked over time
 - **Review Scores:** broken down by accuracy, cleanliness, check-in, communication and location
 - **Host Profile:** experience, portfolio size and guest ratings
+
+![Dashboard](screenshots/dashboard_overview.png)
+
+In the meantime, while the application is being deployed, feel free to explore the dashboard through the video below.
 
 ### 🛠️ 7. Technology Stack
 - dbt, SQL, GitHub, Evidence, VS Code

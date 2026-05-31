@@ -1,12 +1,12 @@
 # Data Analytics Engineering Project: dbt, BigQuery & Evidence
 
-This project aims to build an **end-to-end analytics pipeline**, from data transformation to data visualisation. Data is sourced from [Inside Airbnb](https://insideairbnb.com/get-the-data/)
+This project aims to build an **end-to-end analytics pipeline**, from data transformation to data visualisation.
 
 ### ✅ 1. Project Overview
 
 The project implements a modern data pipeline using BigQuery, dbt and Evidence:
 - Load raw data into **BigQuery**
-- Transform data into analytics-ready table using **dbt**
+- Transform data into analytics-ready table using **dbt**, and ingested into **BigQuery**.
 - Visualize data in **Evidence** through interactive dashboard
 
 ![Schema](screenshots/schema.png)
@@ -20,7 +20,7 @@ my_project/
 ├── models/
 │   ├── staging/        # Cleaned raw data, contracted staging tables
 │   ├── intermediate/   # Processed data for transformation
-│   └── marts/          # Business-ready tables (Dim/facts models)
+│   └── marts/          # Business-ready tables (dim/facts models)
 |
 ├── reports/            # Dashboard Implementation (dashboard implementation)
 │   ├── sources/        # Connection to the created marts models with dbt
@@ -68,7 +68,7 @@ dbt docs serve
                   max_value: 31
 ```
 
-- 3.2. Singular tests: to **validate business logic**
+- 3.2. Singular tests: to **detect business logic errors**
 
 ```
 select *
@@ -111,7 +111,7 @@ If any model or test fails, the GitHub Action fails and the pull request is flag
 ### 📈 5. Building the BI tool with Evidence
 > Evidence is an open source framework for building data products with SQL - things like reports, decision-support tools, and embedded dashboards. It's a code-driven alternative to drag-and-drop BI tools.
 
-I chose Evidence because it **combines the flexibility of a code-first analytics platform with the usability of a modern, intuitive user interface**.
+I chose Evidence because it **combines the flexibility of a code-first analytics platform with the usability of a modern and intuitive user interface**:
 - On the backend, Evidence integrates with my dbt project and BigQuery environment. **Updates can be implemented and deployed quickly while remaining aligned with the underlying data models**.
 - On the frontend, Evidence **offers a clean and engaging user experience that goes beyond traditional drag-and-drop dashboards**. This approach makes insights more accessible, encourages exploration, and helps foster a stronger data-driven culture among users.
 

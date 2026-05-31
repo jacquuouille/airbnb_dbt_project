@@ -117,7 +117,7 @@ I chose Evidence because it **combines the flexibility of a code-first analytics
 
 
 ### 📊 6. Dashboard
-This dashboard is an **interactive exploration tool** built to analyze Vancouver's short-term rental market using data from [InsideAirbnb.com](https://insideairbnb.com).
+This dashboard is an **interactive exploration tool** built to analyze Vancouver's short-term rental market.
 
 Rather than static reports, it is designed to let you **navigate the data your way**, drilling down from city-wide trends to individual listings and hosts through clicks and filters.
 
@@ -139,14 +139,24 @@ What's measured:
 
 In the meantime, while the application is being deployed, feel free to explore the dashboard through the video below.
 
-### 🛠️ 7. Technology Stack
+### 🛠️ 7. Future Improvements
+
+- Schedule dbt models for automated runs
+- Automate data ingestion from Inside Airbnb (e.g., with Airflow)
+- Integrate Evidence into the organization’s project to incorporate testing within the GitHub CI pipeline.
+- Embed the application for direct access and demonstration purposes.
+
+### 🛠️ 8. Technology Stack
 - dbt, SQL, GitHub, Evidence, VS Code
 
-### 👨‍💻 8. Author
+### 🛠️ 9. Data Sources
+- [InsideAirbnb.com](https://insideairbnb.com).
+
+### 👨‍💻 10. Author
 **Jacques Hervochon** 
 🟦 [LinkedIn](https://www.linkedin.com/in/jacques-hervochon-27448898) |
 🔗 [Portfolio](https://jacqueshervochon.carrd.co/#) |
 📆 [Book a call](https://calendly.com/jacqueshervochon/30min)
 
-### 📄 9. License 
+### 📄 11. License 
 This project is licensed under the MIT License.

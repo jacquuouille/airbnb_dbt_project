@@ -21,14 +21,21 @@ my_project/
 │   ├── staging/        # Cleaned raw data, contracted staging tables
 │   ├── intermediate/   # Processed data for transformation
 │   └── marts/          # Business-ready tables (Dim/facts models)
+|
+├── reports/            # Dashboard Implementation (dashboard implementation)
+│   ├── sources/        # Connection to the created marts models with dbt
+│   ├── pages/          # Developped dashboard pages
+|
 ├── seeds/              # Dummy CSV (neighbourhood coordinates (latitude and longitude))
 ├── tests/              # Business logic tests
+|             
 ├── profiles.yml
 └── README.md
+```
 
 Generate and serve documentation locally:
 
-bash
+```
 dbt deps
 dbt docs generate
 dbt docs serve
@@ -38,11 +45,11 @@ dbt docs serve
 
 - 3.1. Generic tests: to **validate business rules**
 
-- ```unique```
-- ```not_null```
-- ```relationships```
-- ```accepted_values```
-- ```dbt_utils.accepted_range```
+    - ```unique```
+    - ```not_null```
+    - ```relationships```
+    - ```accepted_values```
+    - ```dbt_utils.accepted_range```
 
 ```
 - name: listing_monthly_metrics

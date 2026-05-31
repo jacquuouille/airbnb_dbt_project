@@ -149,7 +149,7 @@ In the meantime, while the application is being deployed, feel free to explore t
 ### 🛠️ 8. Technology Stack
 - dbt, SQL, GitHub, Evidence, VS Code
 
-### 🛠️ 9. Data Sources
+### 📚 9. Data Sources
 - [InsideAirbnb.com](https://insideairbnb.com).
 
 ### 👨‍💻 10. Author

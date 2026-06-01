@@ -9,7 +9,7 @@ The project implements a modern data pipeline using BigQuery, dbt and Evidence:
 - Transform data into analytics-ready table using **dbt**, and ingested into **BigQuery**.
 - Visualize data in **Evidence** through interactive dashboard
 
-![Schema](screenshots/schema.png)
+![Schema](screenshots/project_overview.png)
 
 ### 📂 2. Project Structure
 

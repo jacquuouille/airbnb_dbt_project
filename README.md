@@ -138,7 +138,7 @@ What's measured:
 ![Dashboard](screenshots/dashboard_overview.png)
 
 In the meantime, while the application is being deployed, feel free to explore the dashboard through the video below.
-- [Short-Term Rental Analytics Dashboard with Evidence](https://youtu.be/f-loCcwnqPA)
+- [Short-Term Rental Analytics Dashboard with Evidence](https://www.youtube.com/watch?v=VMr9iqVzLl4)
 
 ### ↗️ 7. Future Improvements
 

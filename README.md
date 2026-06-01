@@ -1,6 +1,6 @@
 # Data Analytics Engineering Project: dbt, BigQuery & Evidence
 
-This project aims to build an **end-to-end analytics pipeline**, from data transformation to data visualisation.
+This project aims to build an **end-to-end analytics engineering pipeline**, from data transformation to data visualisation.
 
 ### ✅ 1. Project Overview
 
@@ -60,7 +60,7 @@ dbt docs serve
         tests:
           - not_null
    - name: num_available_nights
-         description: "Total number of night"
+         description: "Total number of nights."
          tests:
             - dbt_utils.accepted_range:
                arguments:
@@ -119,7 +119,7 @@ I chose Evidence because it **combines the flexibility of a code-first analytics
 ### 📊 6. Dashboard
 This dashboard is an **interactive exploration tool** built to analyze Vancouver's short-term rental market.
 
-Rather than static reports, it is designed to let you **navigate the data your way**, drilling down from city-wide trends to individual listings and hosts through clicks and filters.
+Rather than static reports, it is designed to let users **navigate the data their way**, drilling down from city-wide trends to individual listings and hosts through clicks and filters.
 
 The dashboard is structured as a **drilldown experience** across four levels:
 
@@ -144,7 +144,7 @@ In the meantime, while the application is being deployed, feel free to explore t
 
 - Schedule dbt models for automated runs
 - Automate data ingestion from Inside Airbnb (e.g., with Airflow)
-- Integrate Evidence into the organization’s project to incorporate testing within the GitHub CI pipeline.
+- Integrate Evidence into the organization’s project to incorporate testing within the GitHub CI workflow.
 - Embed the application for direct access and demonstration purposes.
 
 ### 🛠️ 8. Technology Stack
@@ -154,7 +154,7 @@ In the meantime, while the application is being deployed, feel free to explore t
 - [InsideAirbnb.com](https://insideairbnb.com) 
 
 ### 👨‍💻 10. Author
-**Jacques Hervochon** 
+- **Jacques Hervochon** 
 🟦 [LinkedIn](https://www.linkedin.com/in/jacques-hervochon-27448898) |
 🔗 [Portfolio](https://jacqueshervochon.carrd.co/#) |
 📆 [Book a call](https://calendly.com/jacqueshervochon/30min)

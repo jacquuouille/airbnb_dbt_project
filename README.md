@@ -138,7 +138,7 @@ What's measured:
 ![Dashboard](screenshots/dashboard_overview.png)
 
 In the meantime, while the application is being deployed, feel free to explore the dashboard through the video below.
-- [](https://youtu.be/f-loCcwnqPA)
+- [Short-Term Rental Analytics Dashboard with Evidence](https://youtu.be/f-loCcwnqPA)
 
 ### ↗️ 7. Future Improvements
 
@@ -151,7 +151,7 @@ In the meantime, while the application is being deployed, feel free to explore t
 - dbt, SQL, GitHub, Evidence, VS Code
 
 ### 📚 9. Data Source
-- [Short-Term Rental Analytics Dashboard with Evidence](https://youtu.be/VMr9iqVzLl4)
+- [InsideAirbnb.com](https://insideairbnb.com) 
 
 ### 👨‍💻 10. Author
 **Jacques Hervochon** 

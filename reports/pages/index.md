@@ -102,6 +102,7 @@ Explore Vancouver's Airbnb market using <a href="https://insideairbnb.com" targe
     data={monthly_occupancy}
     x=month_date
     y=occupancy
+    xFmt=mmmm
     yFmt=pct1
     yMin=0
     yMax=0.8

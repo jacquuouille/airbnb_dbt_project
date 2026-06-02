@@ -22,7 +22,7 @@ my_project/
 │   ├── intermediate/   # Processed data for transformation
 │   └── marts/          # Business-ready tables (dim/facts models)
 |
-├── reports/            # Dashboard Implementation (dashboard implementation)
+├── reports/            # Dashboard Implementation (with Evidence)
 │   ├── sources/        # Connection to the created marts models with dbt
 │   ├── pages/          # Developped dashboard pages
 |

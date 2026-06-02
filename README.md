@@ -116,7 +116,7 @@ I chose Evidence because it **combines the flexibility of a code-first analytics
 - On the frontend, Evidence **offers a clean and engaging user experience that goes beyond traditional drag-and-drop dashboards**. This approach makes insights more accessible, encourages exploration, and helps foster a stronger data-driven culture among users.
 
 
-### 📊 6. Dashboard
+### 📊 6. Dashboarding
 This dashboard is an **interactive exploration tool** built to analyze Vancouver's short-term rental market.
 
 Rather than static reports, it is designed to let users **navigate the data their way**, drilling down from city-wide trends to individual listings and hosts through clicks and filters.

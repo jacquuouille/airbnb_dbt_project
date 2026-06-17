@@ -2,19 +2,7 @@ version: 2
 
 models: 
 
-  - name: amenities_impact
-    description: "Analysis of how different amenities impact occupancy for listings."
-    columns:
-      - name: amenity
-        description: "Name of the amenity (e.g., Wi-Fi, Air Conditioning, Kitchen)."
-        tests:
-          - not_null
-      - name: occupancy_rate
-        description: "Average occupancy rate for listings that include this amenity."
-        tests:
-          - not_null
-
-  - name: listing_performance_metrics
+  - name: agg_listing_performance_metrics
     description: "Key performance metrics per listing (review score ratings)"
     columns:
       - name: listing_id
@@ -86,7 +74,7 @@ models:
             arguments:
               combination_of_columns: ['listing_id', 'host_id']
 
-  - name: listing_monthly_metrics
+  - name: agg_listing_monthly_metrics
     description: "Aggregated monthly occupancy metrics by listing."
     columns:
       - name: month_date

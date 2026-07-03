@@ -1,0 +1,221 @@
+version: 2
+
+sources:
+  - name: airbnb_data
+    database: airbnb-495108
+    schema: airbnb_data
+    tables:
+      - name: calendar
+        description: "This table contains information about calendar-based availability and pricing for Airbnb listings in Vancouver."
+        columns:
+          - name: listing_id
+            description: "Unique identifier for an Airbnb listing."
+            tests:
+              - not_null
+          - name: date
+            description: "The date for which the listing information is recorded."
+            tests:
+              - not_null
+          - name: available
+            description: "Indicates whether the listing is available on the given date."
+            tests:
+              - not_null
+          - name: price
+            description: "The price of the listing for the given date."
+          - name: adjusted_price
+            description: "The adjusted price of the listing, taking into account any discounts or promotions."
+          - name: minimum_nights
+            description: "The minimum number of nights required for a booking."
+            tests:
+              - not_null
+          - name: maximum_nights
+            description: "The maximum number of nights allowed for a booking."
+            tests:
+              - not_null
+
+      - name: listings
+        description: "Detailed listing-level data including host attributes, pricing, availability, and guest reviews."
+        columns:
+          - name: id
+            description: "Unique identifier for the listing."
+            tests:
+              - not_null
+              - unique
+          - name: listing_url
+            description: "URL of the listing on the Airbnb platform."
+            tests:
+              - not_null
+              - unique
+          - name: name
+            description: "Name or title of the listing."
+            tests:
+              - not_null
+          - name: description
+            description: "Free-text description of the listing provided by the host."  
+          - name: host_id
+            description: "Unique identifier for the host of the listing."
+            tests:
+              - not_null:
+                  config:
+                    severity: warn
+                    description: "Host ID should not be null, but some listings may have missing host information."
+          - name: host_name
+            description: "Name of the host."
+          - name: hosts_time_as_user_years
+            description: "Number of years the host has been active on the Airbnb platform."
+            tests:
+              - not_null:
+                  config:
+                    severity: warn
+                    description: "Host time as user in years should not be null, but some hosts may have missing information."
+          - name: hosts_time_as_user_months
+            description: "Number of months the host has been active on the Airbnb platform."
+            tests:
+              - not_null:
+                  config:
+                    severity: warn
+                    description: "Host time as user in months should not be null, but some hosts may have missing information."
+          - name: hosts_time_as_host_years
+            description: "Number of years the host has been hosting on the Airbnb platform."
+            tests:
+              - not_null:
+                  config:
+                    severity: warn
+                    description: "Host time as host in years should not be null, but some hosts may have missing information."
+          - name: hosts_time_as_host_months
+            description: "Number of months the host has been hosting on the Airbnb platform."
+            tests:
+              - not_null:
+                  config:
+                    severity: warn
+                    description: "Host time as host in months should not be null, but some hosts may have missing information."
+          - name: host_location
+            description: "Location of the host."
+          - name: host_about
+            description: "Free-text description about the host."
+          - name: host_is_superhost
+            description: "Indicates whether the host is a superhost."
+            tests:
+              - not_null:
+                  config:
+                    severity: warn
+                    description: "Host superhost status should not be null, but some hosts may have missing information."
+          - name: host_listings_count
+            description: "Number of listings the host has on the Airbnb platform."
+            tests:
+              - not_null:
+                  config:
+                    severity: warn
+                    description: "Host listings count should not be null, but some hosts may have missing information."
+              - dbt_utils.accepted_range:
+                  arguments:
+                    min_value: 0
+          - name: host_identity_verified
+            description: "Indicates whether the host's identity has been verified."
+            tests:
+              - not_null:
+                  config:
+                    severity: warn
+                    description: "Host identity verification should not be null, but some hosts may have missing information."
+          - name: neighbourhood_cleansed
+            description: "Standardized neighbourhood name." 
+          - name: latitude
+            description: "Latitude coordinate of the listing location."
+            tests:
+              - not_null
+              - dbt_utils.accepted_range:
+                  arguments:
+                    min_value: -90
+                    max_value: 90
+          - name: longitude
+            description: "Longitude coordinate of the listing location." 
+            tests:
+              - not_null
+              - dbt_utils.accepted_range:
+                  arguments:
+                    min_value: -180
+                    max_value: 180
+          - name: property_type
+            description: "Type of property (e.g., apartment, house)."
+          - name: room_type
+            description: "Type of room offered (e.g., entire home, private room, shared room)."
+          - name: accommodates
+            description: "Maximum number of guests the listing can accommodate."
+            tests:
+              - not_null
+              - dbt_utils.accepted_range:
+                  arguments:
+                    min_value: 1
+          - name: bathrooms
+            description: "Number of bathrooms in the listing." 
+          - name: bedrooms
+            description: "Number of bedrooms in the listing." 
+          - name: beds
+            description: "Number of beds available in the listing." 
+          - name: amenities
+            description: "List of amenities available at the listing."
+          - name: price
+            description: "Listing price per night, stored as a string (includes currency symbols)."
+          - name: minimum_nights
+            description: "Minimum number of nights required for booking."
+          - name: maximum_nights
+            description: "Maximum number of nights allowed for booking."  
+          - name: has_availability
+            description: "Indicates whether the listing has availability."
+          - name: availability_365
+            description: "Number of available days in the next 365 days."  
+          - name: number_of_reviews
+            description: "Total number of reviews received."  
+          - name: estimated_occupancy_l365d
+            description: "Estimated occupancy over the last 365 days."
+          - name: estimated_revenue_l365d
+            description: "Estimated revenue over the last 365 days (stored as string)."
+          - name: first_review
+            description: "Date of the first review."
+          - name: last_review
+            description: "Date of the most recent review."
+          - name: review_scores_rating
+            description: "Overall rating score." 
+          - name: review_scores_accuracy
+            description: "Rating for accuracy." 
+          - name: review_scores_cleanliness
+            description: "Rating for cleanliness." 
+          - name: review_scores_checkin
+            description: "Rating for check-in experience." 
+          - name: review_scores_communication
+            description: "Rating for communication." 
+          - name: review_scores_location
+            description: "Rating for location." 
+          - name: review_scores_value
+            description: "Rating for value." 
+          - name: license
+            description: "License or registration number for the listing."   
+          - name: reviews_per_month
+            description: "Average number of reviews per month."
+
+      - name: reviews
+        description: "This table contains individual reviews for listings, including reviewer information, review content, and ratings."
+        columns:
+          - name: listing_id
+            description: "Unique identifier for the listing being reviewed."
+            tests:
+              - not_null
+          - name: id
+            description: "Unique identifier for the review."
+            tests:
+              - not_null
+              - unique
+          - name: date
+            description: "Date when the review was posted."
+            tests:
+              - not_null
+          - name: reviewer_id
+            description: "Unique identifier for the reviewer."
+            tests:
+              - not_null
+          - name: reviewer_name
+            description: "Name of the reviewer."
+          - name: comments
+            description: "Text content of the review."
+            tests:
+              - not_null

@@ -1,0 +1,147 @@
+version: 2
+
+models: 
+
+  - name: agg_listing_performance_metrics
+    description: "Key performance metrics per listing (review score ratings)"
+    columns:
+      - name: listing_id
+        description: "Unique identifier for the listing."
+        tests: 
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_listings')
+                field: listing_id
+      - name: host_id
+        description: "Unique identifier for the host of the listing."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_hosts')
+                field: host_id
+      - name: num_reviews
+        description: "Total number of reviews received for the listing."
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+      - name: avg_rating
+        description: "Average review score rating"
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 5
+      - name: avg_accuracy
+        description: "Average accuracy rating"
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 5
+      - name: avg_cleanliness
+        description: "Average cleanliness rating"
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 5
+      - name: avg_checkin
+        description: "Average check-in rating"
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 5
+      - name: avg_communication
+        description: "Average communication rating"
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 5
+      - name: avg_location
+        description: "Average location rating"
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 5
+    tests:
+        - dbt_utils.unique_combination_of_columns:
+            arguments:
+              combination_of_columns: ['listing_id', 'host_id']
+
+  - name: agg_listing_monthly_metrics
+    description: "Aggregated monthly occupancy metrics by listing."
+    columns:
+      - name: month_date
+        description: "Calendar date truncated to the month level."
+        tests:
+          - not_null
+      - name: host_id
+        description: "Unique identifier for the host of the listing."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_hosts')
+                field: host_id
+      - name: listing_id
+        description: "Unique identifier for the listing."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_listings')
+                field: listing_id
+      - name: listing_neighbourhood
+        description: "Neighborhood where the listing is located."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_listings')
+                field: listing_neighbourhood
+      - name: listing_property_type
+        description: "Type of property (e.g., Apartment, House, Condo)."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_listings')
+                field: listing_property_type
+      - name: listing_room_type
+        description: "Type of room offered (e.g. Entire home/apt, Private room, Shared room)."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_listings')
+                field: listing_room_type
+      - name: num_booked_nights
+        description: "Total number of nights booked by customers for the listing during the month."
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+      - name: num_available_nights
+        description: "Total number of night"
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 31
+      - name: pct_occupancy
+        description: "Calculated occupancy rate for the month."
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 100
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: ['month_date', 'host_id', 'listing_id']

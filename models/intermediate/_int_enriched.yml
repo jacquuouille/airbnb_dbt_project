@@ -1,5 +1,0 @@
-version: 2
-
-models:
-    - name: int_listings_enriched
-      description: Dimension table with enriched listing attributes for neighbourhoods (latitude and longitude).

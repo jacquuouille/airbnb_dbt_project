@@ -114,7 +114,7 @@ models:
                 to: ref('dim_listings')
                 field: listing_property_type
       - name: listing_room_type
-        description: "Type of room offered (e.g., Entire home/apt, Private room, Shared room)."
+        description: "Type of room offered (e.g. Entire home/apt, Private room, Shared room)."
         tests:
           - not_null
           - relationships:
